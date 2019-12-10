@@ -68,7 +68,7 @@ def test_02() :
 
     print('  cdir: %s\n  type: %s\n  runnum: %d' % (cdir, type, rnum))
 
-    cff = CalibFileFinder(cdir, group, pbits=0377)
+    cff = CalibFileFinder(cdir, group, pbits=0o377)
     fname = cff.findCalibFile(src, type, rnum)
 
     print('  calibration file name: %s' % fname)
