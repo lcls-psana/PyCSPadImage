@@ -17,6 +17,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 #------------------------------
 #  Module's version from CVS --
@@ -104,24 +105,24 @@ class CSPAD2x2CalibParsDefault (object) :
         """        
         if partype==None :
             for type in self.list_of_clib_types :
-                print '\nprintCalibParsDefault(): Calibration constants type "' + type + '"' # + '" with shape', self.cpars[type].shape
-                print self.defpars[type]
+                print('\nprintCalibParsDefault(): Calibration constants type "' + type + '"') # + '" with shape', self.cpars[type].shape
+                print(self.defpars[type])
         else :
             if partype in self.list_of_clib_types :
-                print '\nprintCalibParsDefault(): Calibration constants type "' + partype + '"' # + '" with shape', self.cpars[type].shape
-                print self.defpars[partype]
+                print('\nprintCalibParsDefault(): Calibration constants type "' + partype + '"') # + '" with shape', self.cpars[type].shape
+                print(self.defpars[partype])
             else :
                 msg =  'WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "' + partype + \
                        '" IS NOT FOUND IN THE AVAILABLE LIST:\n' + str(self.list_of_clib_types)
-                print msg
+                print(msg)
             
 #---------------------
 
     def printListOfCalibTypes (self) :
         """Print the list of calibration types.
         """
-        print '\nprintListOfCalibTypes(): list_of_clib_types:' #, self.list_of_clib_types
-        for type in self.list_of_clib_types : print '    ', type
+        print('\nprintListOfCalibTypes(): list_of_clib_types:') #, self.list_of_clib_types
+        for type in self.list_of_clib_types : print('    ', type)
 
 #---------------------
 
@@ -133,7 +134,7 @@ class CSPAD2x2CalibParsDefault (object) :
         else :
             msg = 'WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "' + type + \
                   '" IS NOT FOUND IN THE AVAILABLE LIST:\n' + str(self.list_of_clib_types)
-            print msg
+            print(msg)
             return None
 
 #---------------------------------------
@@ -146,11 +147,11 @@ cspad2x2calibparsdefault = CSPAD2x2CalibParsDefault()
 
 def main_test() :
 
-    print 'CSPAD2x2CalibParsDefault is enable as a singletone cspad2x2calibparsdefault'    
+    print('CSPAD2x2CalibParsDefault is enable as a singletone cspad2x2calibparsdefault')    
     cspad2x2calibparsdefault.printCalibParsDefault()
     cspad2x2calibparsdefault.printListOfCalibTypes()
     cspad2x2calibparsdefault.printCalibParsDefault('center')
-    print '\nTest of getCalibParsDefault("center"):\n', cspad2x2calibparsdefault.getCalibParsDefault('center')
+    print('\nTest of getCalibParsDefault("center"):\n', cspad2x2calibparsdefault.getCalibParsDefault('center'))
 
 if __name__ == "__main__" :
     main_test()

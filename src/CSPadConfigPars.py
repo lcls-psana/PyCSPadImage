@@ -18,6 +18,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 #------------------------------
 #  Module's version from CVS --
@@ -59,18 +60,18 @@ class HDF5File(object) :
 
         #print '=== Open HDF5 file: ' + fname
         if not os.path.exists(fname) :
-            print  'ERROR: THE SPECIFIED FILE "', fname, '" DOES NOT EXIST.'
+            print('ERROR: THE SPECIFIED FILE "', fname, '" DOES NOT EXIST.')
             return None
             #sys.exit ( 'Exit on ERROR' )
 
         try :
             self.h5file = h5py.File(fname,'r') # open read-only
             self.fname = fname
-            print  'Open file', fname
+            print('Open file', fname)
             return self.h5file
 
         except IOError:
-            print 'IOError: CAN NOT OPEN FILE:', fname
+            print('IOError: CAN NOT OPEN FILE:', fname)
             return None
             #sys.exit ( 'Exit on ERROR' )
 
@@ -263,9 +264,9 @@ class CSPadConfigPars(object) :
             #return self.ds_element[event]
             return self.ds_element[event]['quad']
         except KeyError: 
-            print 80*'!'
-            print 'WARNING: The CSPad configuration for ds_element[event][quad] is not found. Default will be used'
-            print 80*'!'
+            print(80*'!')
+            print('WARNING: The CSPad configuration for ds_element[event][quad] is not found. Default will be used')
+            print(80*'!')
             return self.quadNumsInEvent_def
 
 #---------------------
@@ -286,9 +287,9 @@ class CSPadConfigPars(object) :
         try:
             self.indPairsInQuads = config_ds['sections'] # For V2 it is config_ds.value[13], for V3 it is 15th  ...
         except : # NoneType KeyError: 
-            print 80*'!'
-            print 'WARNING: The CSPAD configuration for "config" dataset is not found. Default will be used'
-            print 80*'!'
+            print(80*'!')
+            print('WARNING: The CSPAD configuration for "config" dataset is not found. Default will be used')
+            print(80*'!')
             self.indPairsInQuads = self.indPairsInQuads_def
 
 #---------------------
@@ -296,7 +297,7 @@ class CSPadConfigPars(object) :
     def _isCSPad2x2Dataset( self, dsname ):
         """Check if the dsname is for CsPad2x2."""
         if gm.CSpad2x2ElementIsInTheName(dsname) :
-            print 'getCSpadConfiguration(...): This is a CSpad2x2Element. Special configuration is not required'
+            print('getCSpadConfiguration(...): This is a CSpad2x2Element. Special configuration is not required')
             self.isCSPad2x2 = True
         else:
             self.isCSPad2x2 = False
@@ -332,8 +333,8 @@ class CSPadConfigPars(object) :
             try :
                 arr_in.shape = (4,8,185,388)
             except :
-                print 'ERROR in getCSPadPixArrayShapedAsData(): Input array shape=', arr_out.shape,\
-                      'can not be reshaped to (4,8,185,388)'
+                print('ERROR in getCSPadPixArrayShapedAsData(): Input array shape=', arr_out.shape,\
+                      'can not be reshaped to (4,8,185,388)')
                 return arr_in
 
         nsects_in_data = max(self.indPairsInQuads.flatten()) + 1
@@ -374,11 +375,11 @@ class CSPadConfigPars(object) :
 
     def printCSPadConfigPars(self) :
         """Prints the CSPad current configuration parameters."""
-        print 50*'-'
-        print 'printCSPadConfigPars():'
-        print '\nquadNumsInEvent()  =',   self.getQuadNumsInEvent()
-        print '\nindPairsInQuads()  =\n', self.getIndPairsInQuads()
-        print 50*'-'
+        print(50*'-')
+        print('printCSPadConfigPars():')
+        print('\nquadNumsInEvent()  =',   self.getQuadNumsInEvent())
+        print('\nindPairsInQuads()  =\n', self.getIndPairsInQuads())
+        print(50*'-')
 
 #---------------------
 
@@ -409,13 +410,13 @@ def test_object(config) :
 
     fname, dsname, event  = get_test_fname_dsname_event()
 
-    print 'Default CSPad configuration pars:'
+    print('Default CSPad configuration pars:')
     config.printCSPadConfigPars()
 
-    print '\nCSPad configuration pars: for fname, dsname, event =\n', fname, '\n', dsname, '\n', event
+    print('\nCSPad configuration pars: for fname, dsname, event =\n', fname, '\n', dsname, '\n', event)
     t0_sec = time()
     config.setCSPadConfiguration( fname, dsname, event ) # This will set current CSPad configuration
-    print 'Consumed time to get CSPAD configuration parameters from hdf5 file (sec) =', time()-t0_sec
+    print('Consumed time to get CSPAD configuration parameters from hdf5 file (sec) =', time()-t0_sec)
     config.printCSPadConfigPars()
 
 #----------------------------------------------
@@ -434,68 +435,68 @@ def test_object_with_external_pars() :
     config.setCSPadConfigArrays( indPairsInQuads=indPairs, quadNumsInEvent=quadNums )
     config.printCSPadConfigPars()
 
-    print '\nTest of conversion methods'
-    print '\n1. Conversion from entire cspad array to shaped as raw data'
+    print('\nTest of conversion methods')
+    print('\n1. Conversion from entire cspad array to shaped as raw data')
 
     arr_entire_cspad = np.arange(4*8*185*388)
     arr_entire_cspad.shape = (4,8,185,388)
     t1_sec = time()
     arr_raw_data = config.getCSPadPixArrayShapedAsData(arr_entire_cspad)
-    print 'getCSPadPixArrayShapedAsData transformation time (sec) =', time()-t1_sec
+    print('getCSPadPixArrayShapedAsData transformation time (sec) =', time()-t1_sec)
 
     #print 'arr_raw_data:\n', arr_raw_data
-    print 'arr_raw_data.shape:', arr_raw_data.shape
+    print('arr_raw_data.shape:', arr_raw_data.shape)
     
-    print '\n2. Conversion from raw data to entire cspad array'
+    print('\n2. Conversion from raw data to entire cspad array')
     t2_sec = time()
     arr_entire_cspad_2 = config.getCSPadPixArrayFromArrayShapedAsData(arr_raw_data)
-    print 'getCSPadPixArrayFromArrayShapedAsData transformation time (sec) =', time()-t2_sec
+    print('getCSPadPixArrayFromArrayShapedAsData transformation time (sec) =', time()-t2_sec)
 
     #print 'arr_entire_cspad_2:\n',     arr_entire_cspad_2
-    print 'arr_entire_cspad_2.shape:', arr_entire_cspad_2.shape
+    print('arr_entire_cspad_2.shape:', arr_entire_cspad_2.shape)
 
-    print '\n3. Check if arrays are equals after two transformations'
+    print('\n3. Check if arrays are equals after two transformations')
     indPairsInQuads = config.getIndPairsInQuads()
-    print 'indPairsInQuads:\n', indPairsInQuads
+    print('indPairsInQuads:\n', indPairsInQuads)
     arraysAreEqual = True
     for q in range(4) :
         for s in range(8) :
             if indPairsInQuads[q,s] != -1 :
                 if not np.equal(arr_entire_cspad[q,s,:],arr_entire_cspad_2[q,s,:]).all() : arraysAreEqual = False
 
-    if arraysAreEqual : print 'Arrays are equal in expected parts after two transformations'
-    else              : print 'Arrays are NOT equal after two transformations'
+    if arraysAreEqual : print('Arrays are equal in expected parts after two transformations')
+    else              : print('Arrays are NOT equal after two transformations')
 
 #----------------------------------------------
 
 if __name__ == "__main__" :
 
-    print 65*'='
+    print(65*'=')
 
     if len(sys.argv)==1 :
-        print 'Use command: python', sys.argv[0], '<test-number=0-3>'
+        print('Use command: python', sys.argv[0], '<test-number=0-3>')
 
     elif sys.argv[1]=='0' :
-        print 'Test singleton of CSPadConfigPars'
+        print('Test singleton of CSPadConfigPars')
         config = cspadconfig # This is a singleton name
         test_object(config)
 
     elif sys.argv[1]=='1' :
-        print 'Test default CSPadConfigPars object'
+        print('Test default CSPadConfigPars object')
         config = CSPadConfigPars() # instatiate object
         test_object(config)
 
     elif sys.argv[1]=='2' :
-        print 'Test of access to static CSPadConfigPars parameters'
-        print 'my_wid2x1:', CSPadConfigPars().wid2x1
-        print 'my_len2x1:', CSPadConfigPars().len2x1
+        print('Test of access to static CSPadConfigPars parameters')
+        print('my_wid2x1:', CSPadConfigPars().wid2x1)
+        print('my_len2x1:', CSPadConfigPars().len2x1)
 
     elif sys.argv[1]=='3' :
-        print 'Test of CSPadConfigPars object with initialization using external parameters'
+        print('Test of CSPadConfigPars object with initialization using external parameters')
         test_object_with_external_pars()
 
     else :
-        print 'Non-expected arguments: sys.argv=', sys.argv
+        print('Non-expected arguments: sys.argv=', sys.argv)
 
     sys.exit ( 'End of test.' )
 

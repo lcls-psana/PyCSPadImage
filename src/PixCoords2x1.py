@@ -37,6 +37,7 @@ The (r,c)=(0,0) is in the top left corner of the matrix, has coordinates (xmin,y
    (Xmin,Ymin)
 
 """
+from __future__ import print_function
 
 #--------------------------------
 #  Module's version from CVS --
@@ -112,48 +113,48 @@ class PixCoords2x1() :
 #------------------------------
 
     def print_maps_2x1_um(sp) :
-        print 'x_map2x1_um = ',       sp.x_map2x1_um
-        print 'x_map2x1_um.shape = ', sp.x_map2x1_um.shape
-        print 'y_map2x1_um = ',       sp.y_map2x1_um
-        print 'y_map2x1_um.shape = ', sp.y_map2x1_um.shape
+        print('x_map2x1_um = ',       sp.x_map2x1_um)
+        print('x_map2x1_um.shape = ', sp.x_map2x1_um.shape)
+        print('y_map2x1_um = ',       sp.y_map2x1_um)
+        print('y_map2x1_um.shape = ', sp.y_map2x1_um.shape)
 
 #------------------------------
 
     def print_maps_2x1_pix(sp) :
-        print 'x_map2x1_pix = ',       sp.x_map2x1_pix
-        print 'x_map2x1_pix.shape = ', sp.x_map2x1_pix.shape
-        print 'y_map2x1_pix = ',       sp.y_map2x1_pix
-        print 'y_map2x1_pix.shape = ', sp.y_map2x1_pix.shape
+        print('x_map2x1_pix = ',       sp.x_map2x1_pix)
+        print('x_map2x1_pix.shape = ', sp.x_map2x1_pix.shape)
+        print('y_map2x1_pix = ',       sp.y_map2x1_pix)
+        print('y_map2x1_pix.shape = ', sp.y_map2x1_pix.shape)
 
 #------------------------------
 
     def print_xy_arr_um(sp) :
-        print 'x_arr_um:\n',       sp.x_arr_um
-        print 'x_arr_um.shape = ', sp.x_arr_um.shape
-        print 'y_arr_um:\n',       sp.y_arr_um
-        print 'y_arr_um.shape = ', sp.y_arr_um.shape
+        print('x_arr_um:\n',       sp.x_arr_um)
+        print('x_arr_um.shape = ', sp.x_arr_um.shape)
+        print('y_arr_um:\n',       sp.y_arr_um)
+        print('y_arr_um.shape = ', sp.y_arr_um.shape)
 
 #------------------------------
 
     def print_xy_arr_pix(sp) :
-        print 'x_arr_pix:\n',       sp.x_arr_pix
-        print 'x_arr_pix.shape = ', sp.x_arr_pix.shape
-        print 'y_arr_pix:\n',       sp.y_arr_pix
-        print 'y_arr_pix.shape = ', sp.y_arr_pix.shape
+        print('x_arr_pix:\n',       sp.x_arr_pix)
+        print('x_arr_pix.shape = ', sp.x_arr_pix.shape)
+        print('y_arr_pix:\n',       sp.y_arr_pix)
+        print('y_arr_pix.shape = ', sp.y_arr_pix.shape)
 
 #------------------------------
 
     def print_xy_min_max_um(sp) :
         xmin, ymin = sp.get_xy_min_um()
         xmax, ymax = sp.get_xy_max_um()
-        print 'In [um] xmin:%9.2f, xmax:%9.2f, ymin:%9.2f, ymax:%9.2f' % (xmin, xmax, ymin, ymax)
+        print('In [um] xmin:%9.2f, xmax:%9.2f, ymin:%9.2f, ymax:%9.2f' % (xmin, xmax, ymin, ymax))
 
 #------------------------------
 
     def print_xy_min_max_pix(sp) :
         xmin, ymin = sp.get_xy_min_pix()
         xmax, ymax = sp.get_xy_max_pix()
-        print 'In [pix] xmin:%5.0f, xmax:%5.0f, ymin:%5.0f, ymax:%5.0f' % (xmin, xmax, ymin, ymax)
+        print('In [pix] xmin:%5.0f, xmax:%5.0f, ymin:%5.0f, ymax:%5.0f' % (xmin, xmax, ymin, ymax))
 
 #------------------------------
 
@@ -233,7 +234,7 @@ def test_2x1_img() :
     t0_sec = time()
     w = PixCoords2x1(use_wide_pix_center=False)
     #w = PixCoords2x1(use_wide_pix_center=True)
-    print 'Consumed time for coordinate arrays (sec) =', time()-t0_sec
+    print('Consumed time for coordinate arrays (sec) =', time()-t0_sec)
 
     X,Y = w.get_cspad2x1_xy_maps_pix()
     w.print_xy_arr_um()
@@ -243,7 +244,7 @@ def test_2x1_img() :
 
 
     #print 'X(pix) :\n', X
-    print 'X.shape =', X.shape
+    print('X.shape =', X.shape)
 
     xmin, ymin = w.get_xy_min_pix()
     xmax, ymax = w.get_xy_max_pix()
@@ -251,14 +252,14 @@ def test_2x1_img() :
 
     xsize = xmax - xmin 
     ysize = ymax - ymin 
-    print 'xsize =', xsize # 391.0 
-    print 'ysize =', ysize # 185.0
+    print('xsize =', xsize) # 391.0 
+    print('ysize =', ysize) # 185.0
 
     H, Xedges, Yedges = np.histogram2d(X.flatten(), Y.flatten(), bins=[xsize,ysize], range=[[xmin, xmax], [ymin, ymax]], normed=False, weights=X.flatten()+Y.flatten()) 
 
-    print 'Xedges:', Xedges
-    print 'Yedges:', Yedges
-    print 'H.shape:', H.shape
+    print('Xedges:', Xedges)
+    print('Yedges:', Yedges)
+    print('H.shape:', H.shape)
 
     gg.plotImageLarge(H, amp_range=(-250, 250), figsize=(8,10)) # range=(-1, 2), 
     gg.show()
@@ -278,11 +279,11 @@ def test_2x1_img_easy() :
  
 if __name__ == "__main__" :
 
-    if len(sys.argv)==1   : print 'For other test(s) use command: python', sys.argv[0], '<test-number=1-3>'
+    if len(sys.argv)==1   : print('For other test(s) use command: python', sys.argv[0], '<test-number=1-3>')
     elif sys.argv[1]=='1' : test_2x1_xy_maps()
     elif sys.argv[1]=='2' : test_2x1_img()
     elif sys.argv[1]=='3' : test_2x1_img_easy()
-    else : print 'Non-expected arguments: sys.argv=', sys.argv
+    else : print('Non-expected arguments: sys.argv=', sys.argv)
 
     sys.exit( 'End of test.' )
 

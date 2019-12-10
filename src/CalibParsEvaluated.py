@@ -18,6 +18,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 #------------------------------
 #  Module's version from CVS --
@@ -81,7 +82,7 @@ class CalibParsEvaluated (object) :
 #---------------------
 
     def setCalibParsEvaluated (self) :
-        print 'Set the calibration parameters evaluated'
+        print('Set the calibration parameters evaluated')
 
         # For now the only type of evaluated parameters is the 'center_global'        
 
@@ -344,10 +345,10 @@ class CalibParsEvaluated (object) :
         detDimX_um = detDimX*pixSize
         detDimY_um = detDimY*pixSize
 
-        print 'evaluateCSPadPixCoordinates (...):'
-        print 'detDimX, detDimY =', detDimX, detDimY
-        print 'detDimX_um, detDimY_um =', detDimX_um, detDimY_um
-        print 'nquads, nsects   =', nquads, nsects
+        print('evaluateCSPadPixCoordinates (...):')
+        print('detDimX, detDimY =', detDimX, detDimY)
+        print('detDimX_um, detDimY_um =', detDimX_um, detDimY_um)
+        print('nquads, nsects   =', nquads, nsects)
 
         self.print2DNumpyArr(segmX_um,   title='Segment center X (um):')
         self.print2DNumpyArr(segmY_um,   title='Segment center Y (um):')
@@ -395,7 +396,7 @@ class CalibParsEvaluated (object) :
 
     def evaluateCSPadPixCoordinatesShapedAsData(self, fname, dsname, rotation=0, mirror=False) :
 
-        print 'Evaluate pix coordinates for fname:', fname
+        print('Evaluate pix coordinates for fname:', fname)
 
         self.evaluateCSPadPixCoordinates (rotation, mirror)
 
@@ -419,8 +420,8 @@ class CalibParsEvaluated (object) :
                 self.pix_global_shaped_as_data_x[ind_segm_in_arr][:] = self.pix_global_x[quad][segm][:]
                 self.pix_global_shaped_as_data_y[ind_segm_in_arr][:] = self.pix_global_y[quad][segm][:]
 
-        print 'self.pix_global_shaped_as_data_x.shape =', self.pix_global_shaped_as_data_x.shape       
-        print 'evaluateCSPadPixCoordinatesShapedAsData: done'
+        print('self.pix_global_shaped_as_data_x.shape =', self.pix_global_shaped_as_data_x.shape)       
+        print('evaluateCSPadPixCoordinatesShapedAsData: done')
 
 #---------------------
 
@@ -437,11 +438,11 @@ class CalibParsEvaluated (object) :
 
     def printCSPadPixCoordinates (self) :
 
-        print 'self.pix_global_x =\n', self.pix_global_x
-        print 'self.pix_global_y =\n', self.pix_global_y
+        print('self.pix_global_x =\n', self.pix_global_x)
+        print('self.pix_global_y =\n', self.pix_global_y)
 
-        print 'self.pix_global_x.shape=', self.pix_global_x.shape
-        print 'self.pix_global_y.shape=', self.pix_global_y.shape
+        print('self.pix_global_x.shape=', self.pix_global_x.shape)
+        print('self.pix_global_y.shape=', self.pix_global_y.shape)
 
 #---------------------
 
@@ -488,15 +489,15 @@ class CalibParsEvaluated (object) :
         """        
         xpix, ypix = self.getCSPadPixCoordinatesShapedAsData_pix ()
 
-        print 'Data       array shape = ', ds1ev.shape
-        print 'Coordinate array shape = ',  xpix.shape
+        print('Data       array shape = ', ds1ev.shape)
+        print('Coordinate array shape = ',  xpix.shape)
         
         dimX,dimY = self.detDimX, self.detDimY
 
         img_arr = np.zeros((dimX+1,dimY+1), dtype=np.float32)
 
         nsect_in_arr = xpix.shape[0] 
-        print 'nsect_in_arr =', nsect_in_arr
+        print('nsect_in_arr =', nsect_in_arr)
 
         for sect in range(nsect_in_arr) :
             for row in range(185) :
@@ -523,7 +524,7 @@ class CalibParsEvaluated (object) :
         pixSize     = ccp.cspadconfig.pixSize
         pixSizeWide = ccp.cspadconfig.pixSizeWide
 
-        print 'wid2x1, len2x1, pixSize, pixSizeWide =', wid2x1, len2x1, pixSize, pixSizeWide
+        print('wid2x1, len2x1, pixSize, pixSizeWide =', wid2x1, len2x1, pixSize, pixSizeWide)
 
         widOffset = (184/2)*pixSize
         lenOffset = pixSizeWide + 0.5*pixSize
@@ -550,27 +551,27 @@ class CalibParsEvaluated (object) :
 #---------------------
 
     def print2DNumpyArr( self, arr=np.zeros((4,8), dtype=np.float32), title='', format='%10.2f' ) :
-        print title,
+        print(title, end=' ')
         rows,cols = arr.shape
 
         for row in range(rows) :
-            print '\nrow ', row, ':',
+            print('\nrow ', row, ':', end=' ')
             for col in range(cols) :
-                print format % (arr[row][col]),                   
-        print '\n'
+                print(format % (arr[row][col]), end=' ')                   
+        print('\n')
 
 #---------------------
 
     def printListOfEvaluatedTypes (self) :
-        print 'printListOfEvaluatedTypes(): list_of_eval_types:', self.list_of_eval_types
+        print('printListOfEvaluatedTypes(): list_of_eval_types:', self.list_of_eval_types)
 
 #---------------------
 
     def printCalibParsEvaluatedAll (self) :
 
         for type in self.list_of_eval_types :
-            print '\nEvaluated calibration parameter type "' + type + '" with shape', self.evalpars[type].shape
-            print self.evalpars[type]
+            print('\nEvaluated calibration parameter type "' + type + '" with shape', self.evalpars[type].shape)
+            print(self.evalpars[type])
 
 #---------------------
 
@@ -579,15 +580,15 @@ class CalibParsEvaluated (object) :
         """        
         if partype==None :
             for type in self.list_of_eval_types :
-                print '\nprintCalibParsEvaluated(): Evaluated calibration parameter type "' + type + '" with shape', self.evalpars[type].shape
-                print self.evalpars[type]
+                print('\nprintCalibParsEvaluated(): Evaluated calibration parameter type "' + type + '" with shape', self.evalpars[type].shape)
+                print(self.evalpars[type])
         else :
             if partype in self.list_of_eval_types :
-                print '\nprintCalibParsEvaluated(): Evaluated calibration parameter type "' + partype + '" with shape', self.evalpars[partype].shape
-                print self.evalpars[partype]
+                print('\nprintCalibParsEvaluated(): Evaluated calibration parameter type "' + partype + '" with shape', self.evalpars[partype].shape)
+                print(self.evalpars[partype])
             else :
-                print  'WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "', partype, \
-                       '" IS NOT FOUND IN THE AVAILABLE LIST:\n', self.list_of_eval_types
+                print('WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "', partype, \
+                       '" IS NOT FOUND IN THE AVAILABLE LIST:\n', self.list_of_eval_types)
             
 #---------------------
 
@@ -596,8 +597,8 @@ class CalibParsEvaluated (object) :
         if type in self.list_of_eval_types :
             return self.evalpars[type]
         else :
-            print  'WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "', type, \
-                   '" IS NOT FOUND IN THE AVAILABLE LIST:\n', self.list_of_eval_types
+            print('WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "', type, \
+                   '" IS NOT FOUND IN THE AVAILABLE LIST:\n', self.list_of_eval_types)
             return None
 
 #----------------------------------------------
@@ -622,9 +623,9 @@ def main_test() :
     cpeval.printCalibParsEvaluated('center_global')
     cpeval.printCalibParsEvaluated('rotation_index')
 
-    print calibpars.getCalibPars('center')
+    print(calibpars.getCalibPars('center'))
     calibpars.printCalibPars() # prints the calib pars from files, if found
-    print 'center_global =\n', cpeval.getCalibParsEvaluated('center_global')
+    print('center_global =\n', cpeval.getCalibParsEvaluated('center_global'))
 
 if __name__ == "__main__" :
 

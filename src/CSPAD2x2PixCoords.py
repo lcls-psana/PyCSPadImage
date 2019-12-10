@@ -17,6 +17,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 #--------------------------------
 #  Module's version from CVS --
@@ -111,7 +112,7 @@ class CSPAD2x2PixCoords (PixCoords2x1) :
 #------------------------------
 
     def print_cspad2x2_geometry_pars (sp) :
-        print 'print_cspad2x2_geometry_pars(): xc, yc, zc, tilt =', sp.xc, sp.yc, sp.zc, sp.tilt
+        print('print_cspad2x2_geometry_pars(): xc, yc, zc, tilt =', sp.xc, sp.yc, sp.zc, sp.tilt)
 
 #------------------------------
 
@@ -162,11 +163,11 @@ class CSPAD2x2PixCoords (PixCoords2x1) :
 #------------------------------
 
     def print_cspad2x2_coordinate_arrays(sp) :
-        print 'print_cspad2x2_coordinate_arrays()'        
-        print 'sp.x_pix_um:\n',      sp.x_pix_um
-        print 'sp.x_pix_um.shape =', sp.x_pix_um.shape
-        print 'sp.y_pix_um:\n',      sp.y_pix_um
-        print 'sp.y_pix_um.shape =', sp.y_pix_um.shape
+        print('print_cspad2x2_coordinate_arrays()')        
+        print('sp.x_pix_um:\n',      sp.x_pix_um)
+        print('sp.x_pix_um.shape =', sp.x_pix_um.shape)
+        print('sp.y_pix_um:\n',      sp.y_pix_um)
+        print('sp.y_pix_um.shape =', sp.y_pix_um.shape)
 
 #------------------------------
 
@@ -220,16 +221,16 @@ def test_reshaping_arrs_for_cspad2x2() :
     ord_arr = data2x2ToTwo2x1(raw_arr)
     tst_arr = two2x1ToData2x2(ord_arr)
 
-    print 'raw_arr:', raw_arr
-    print 'ord_arr:', ord_arr
-    print 'tst_arr:', tst_arr
+    print('raw_arr:', raw_arr)
+    print('ord_arr:', ord_arr)
+    print('tst_arr:', tst_arr)
 
-    print 'raw_arr.shape:', raw_arr.shape
-    print 'ord_arr.shape:', ord_arr.shape
-    print 'tst_arr.shape:', tst_arr.shape
+    print('raw_arr.shape:', raw_arr.shape)
+    print('ord_arr.shape:', ord_arr.shape)
+    print('tst_arr.shape:', tst_arr.shape)
 
-    if np.equal(tst_arr,raw_arr).all() : print 'Arrays are equal after two transformations'
-    else                               : print 'Arrays are NOT equal after two transformations'
+    if np.equal(tst_arr,raw_arr).all() : print('Arrays are equal after two transformations')
+    else                               : print('Arrays are NOT equal after two transformations')
 
 #------------------------------
 
@@ -245,16 +246,16 @@ def test_of_coord_arrs(coord, calib=None) :
     amp_range = (-1, 2)
     if calib != None :
         W = calib.getCalibPars('pedestals')
-        print ' W.shape =', W.shape # W.shape = (185, 388, 2 )
+        print(' W.shape =', W.shape) # W.shape = (185, 388, 2 )
         amp_range = (200,600)
 
-    print 'iX.shape =', iX.shape
-    print 'iY.shape =', iY.shape
+    print('iX.shape =', iX.shape)
+    print('iY.shape =', iY.shape)
 
     t0_sec = time()
     #img2d = gg.getImageAs2DHist(X,Y,W=None)
     img2d = gg.getImageFromIndexArrays(iX,iY,W)
-    print 'Consumed time to create image (sec) =', time()-t0_sec
+    print('Consumed time to create image (sec) =', time()-t0_sec)
 
     
     #gg.plotImageLarge(img2d, amp_range=(-1, 2), figsize=(12,11))
@@ -275,10 +276,10 @@ def test_of_image(coord, calib=None) :
     iX,iY = coord.get_cspad2x2_pix_coordinate_arrays_shapeed_as_data_pix ()
 
     #dset = calib.getCalibPars('pedestals')
-    print ' dset.shape =', dset.shape # dset.shape = (185, 388, 2 )
+    print(' dset.shape =', dset.shape) # dset.shape = (185, 388, 2 )
     t0_sec = time()
     img2d = gg.getImageFromIndexArrays(iX,iY,dset)
-    print 'Consumed time to create image (sec) =', time()-t0_sec
+    print('Consumed time to create image (sec) =', time()-t0_sec)
 
     gg.plotImageLarge(img2d, amp_range=None, figsize=(12,11))
     gg.show()
@@ -295,7 +296,7 @@ def test_instantiation_1 () :
     t0_sec = time()
     coord = CSPAD2x2PixCoords(xc_um=xc, yc_um=yc, tilt_deg=tilt)
     coord.print_cspad2x2_geometry_pars()
-    print 'Consumed time for coordinate arrays (sec) =', time()-t0_sec
+    print('Consumed time for coordinate arrays (sec) =', time()-t0_sec)
     return coord
 
 #------------------------------
@@ -344,7 +345,7 @@ def test_3() :
     """
     coord = test_instantiation_1() 
     img2d = coord.get_cspad2x2_image(None)
-    print 'img2d.shape =', img2d.shape
+    print('img2d.shape =', img2d.shape)
     
     gg.plotImageLarge(img2d, amp_range=(-1, 2), figsize=(12,11))
     gg.show()
@@ -360,14 +361,14 @@ def test_4() :
 #------------------------------
  
 if __name__ == "__main__" :
-    if len(sys.argv)==1   : print 'Use command: python', sys.argv[0], '<test-number=0-5>'
+    if len(sys.argv)==1   : print('Use command: python', sys.argv[0], '<test-number=0-5>')
     elif sys.argv[1]=='0' : test_0()
     elif sys.argv[1]=='1' : test_1()
     elif sys.argv[1]=='2' : test_2()
     elif sys.argv[1]=='3' : test_3()
     elif sys.argv[1]=='4' : test_4()
     elif sys.argv[1]=='5' : test_reshaping_arrs_for_cspad2x2()
-    else : print 'Non-expected arguments: sys.argv=', sys.argv
+    else : print('Non-expected arguments: sys.argv=', sys.argv)
 
     sys.exit ( 'End of test.' )
 

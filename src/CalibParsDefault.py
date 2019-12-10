@@ -18,6 +18,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 #------------------------------
 #  Module's version from CVS --
@@ -177,21 +178,21 @@ class CalibParsDefault (object) :
         """        
         if partype==None :
             for type in self.list_of_clib_types :
-                print '\nprintCalibParsDefault(): Calibration constants type "' + type + '"' # + '" with shape', self.cpars[type].shape
-                print self.defpars[type]
+                print('\nprintCalibParsDefault(): Calibration constants type "' + type + '"') # + '" with shape', self.cpars[type].shape
+                print(self.defpars[type])
         else :
             if partype in self.list_of_clib_types :
-                print '\nprintCalibParsDefault(): Calibration constants type "' + partype + '"' # + '" with shape', self.cpars[type].shape
-                print self.defpars[partype]
+                print('\nprintCalibParsDefault(): Calibration constants type "' + partype + '"') # + '" with shape', self.cpars[type].shape
+                print(self.defpars[partype])
             else :
-                print  'WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "', partype, \
-                       '" IS NOT FOUND IN THE AVAILABLE LIST:\n', self.list_of_clib_types
+                print('WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "', partype, \
+                       '" IS NOT FOUND IN THE AVAILABLE LIST:\n', self.list_of_clib_types)
             
 #---------------------
 
     def printListOfCalibTypes (self) :
-        print '\nprintListOfCalibTypes(): list_of_clib_types:' #, self.list_of_clib_types
-        for type in self.list_of_clib_types : print '    ', type
+        print('\nprintListOfCalibTypes(): list_of_clib_types:') #, self.list_of_clib_types
+        for type in self.list_of_clib_types : print('    ', type)
 
 #---------------------
 
@@ -200,8 +201,8 @@ class CalibParsDefault (object) :
         if type in self.list_of_clib_types :
             return self.defpars[type]
         else :
-            print  'WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "', type, \
-                   '" IS NOT FOUND IN THE AVAILABLE LIST:\n', self.list_of_clib_types
+            print('WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "', type, \
+                   '" IS NOT FOUND IN THE AVAILABLE LIST:\n', self.list_of_clib_types)
             return None
 
 #---------------------------------------
@@ -217,8 +218,8 @@ def main() :
     calibparsdefault.printCalibParsDefault()
     calibparsdefault.printListOfCalibTypes()
     calibparsdefault.printCalibParsDefault('center')
-    print '\nTest getCalibParsDefault("offset") :\n', calibparsdefault.getCalibParsDefault ('offset')
-    print 'End of test'
+    print('\nTest getCalibParsDefault("offset") :\n', calibparsdefault.getCalibParsDefault ('offset'))
+    print('End of test')
 
 if __name__ == "__main__" :
 

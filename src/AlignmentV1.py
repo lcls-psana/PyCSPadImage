@@ -18,6 +18,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 #------------------------------
 #  Module's version from CVS --
@@ -46,7 +47,7 @@ import PyCSPadImage.HDF5Methods        as hm # For test purpose in main only
 
 def main_example_CSpad2x2() :
 
-    print 'Start test in main_example_CSpad2x2()'
+    print('Start test in main_example_CSpad2x2()')
 
     fname = '/reg/d/psdm/xpp/xppi0212/hdf5/xppi0212-r0046.h5'
     dsname = '/Configure:0000/Run:0000/CalibCycle:0000/CsPad2x2::ElementV1/XppGon.0:Cspad2x2.0/data'
@@ -61,7 +62,7 @@ def main_example_CSpad2x2() :
     hm.hdf5mets.close_hdf5_file()
 
     #print 'arr1ev=\n',       arr1ev
-    print 'arr1ev.shape=\n', arr1ev.shape
+    print('arr1ev.shape=\n', arr1ev.shape)
     #arr = arr1ev[:,:,0]
 
     cspadimg = cip.CSPadImageProducer()
@@ -80,7 +81,7 @@ def main_example_CSpad2x2() :
 
 def main_alignment_test() :
 
-    print 'Start test in main_alignment_test()'
+    print('Start test in main_alignment_test()')
 
     #path_calib = '/reg/d/psdm/CXI/cxi80410/calib/CsPad::CalibV1/CxiDs1.0:Cspad.0'            # 2011-05-25
     #path_calib = '/reg/d/psdm/CXI/cxi37411/calib/CsPad::CalibV1/CxiDs1.0:Cspad.0'            # 2011-08-10
@@ -123,10 +124,10 @@ def main_alignment_test() :
 
     event   = 0
 
-    print 'Load calibration parameters from', path_calib 
+    print('Load calibration parameters from', path_calib) 
     #calibpars = calp.calibpars.setCalibParsForPath ( run=runnum, path=path_calib )
     calibpars = calp.CalibPars( path=path_calib, run=runnum  )
-    print 'center_global:\n', calibpars.getCalibPars('center_global')
+    print('center_global:\n', calibpars.getCalibPars('center_global'))
     #print 'offset:\n', calibpars.getCalibPars('offset')
     #calp.calibpars.printCalibPars()
     #calp.calibpars.printCalibFiles ()
@@ -135,7 +136,7 @@ def main_alignment_test() :
     #cald.calibparsdefault.printCalibParsDefault()
     #cald.calibparsdefault.printCalibParsDefault('center_global')
 
-    print 'Get raw CSPad event %d from file %s \ndataset %s' % (event, fname, dsname)
+    print('Get raw CSPad event %d from file %s \ndataset %s' % (event, fname, dsname))
     ds1ev = hm.getOneCSPadEventForTest( fname, dsname, event )
     #ds1ev = hm.getAverageCSPadEvent( fname, dsname, event=200, nevents=500 )
     #ds1ev = hm.getAverageCSPadEvent( fname, dsname, event, nevents=10 )
@@ -155,9 +156,9 @@ def main_alignment_test() :
     #ds1ev -= gm.getCSPadArrayFromFile('/reg/neh/home1/dubrovin/LCLS/CSPadPedestals/cspad-pedestals-cxi49012-r0027.dat')
     #ds1ev -= gm.getCSPadArrayFromFile('/reg/neh/home1/dubrovin/LCLS/CSPadPedestals/cspad-pedestals-xppcom10-r1442.dat')
     ds1ev -= gm.getCSPadArrayFromFile(ped_fname)
-    print 'ds1ev.shape = ',ds1ev.shape # should be (32, 185, 388)
+    print('ds1ev.shape = ',ds1ev.shape) # should be (32, 185, 388)
 
-    print 'Make the CSPad image from raw array'
+    print('Make the CSPad image from raw array')
     #cspadimg = cip.CSPadImageProducer(rotation=0, tiltIsOn=True)#, mirror=True)
     cspadimg = cip.CSPadImageProducer(calibpars, rotation=0, tiltIsOn=True)#, mirror=True)
     #cspadimg.printInputPars()
@@ -165,7 +166,7 @@ def main_alignment_test() :
     #arr = cspadimg.getImageArrayForCSPadElement( ds1ev )
     arr = cspadimg.getCSPadImage( ds1ev )
 
-    print 'Plot CSPad image'
+    print('Plot CSPad image')
 
     #AmpRange = (800,  1300) # for cxi
     AmpRange = (0,  10) # for cxi
@@ -177,7 +178,7 @@ def main_alignment_test() :
     gg.plotSpectrum(arr,range=AmpRange)
     gg.move(50,50)
     #gg.plotImageAndSpectrum(arr,range=(1,2001))
-    print 'To EXIT the test click on "x" in the top-right corner of each plot window.'
+    print('To EXIT the test click on "x" in the top-right corner of each plot window.')
     gg.show()
 
     #ds1ev.shape = (5920, 388)

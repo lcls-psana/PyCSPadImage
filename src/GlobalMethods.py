@@ -18,6 +18,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 
 #------------------------------
@@ -116,12 +117,12 @@ def ImageIsInTheName(dsname):
     if   name1 == 'image' : imageIsInTheName = True
     elif name1 == 'data' and name3[0:16] == 'Princeton::Frame' : imageIsInTheName = True
 
-    print 'imageIsInTheName :',
-    print '       last name:', name1
-    print '2nd to last name:', name2
-    print '3rd to last name:', name3
-    print 'name3[0:16]', name3[0:16]
-    print 'imageIsInTheName returns:', imageIsInTheName
+    print('imageIsInTheName :', end=' ')
+    print('       last name:', name1)
+    print('2nd to last name:', name2)
+    print('3rd to last name:', name3)
+    print('name3[0:16]', name3[0:16])
+    print('imageIsInTheName returns:', imageIsInTheName)
 
     return imageIsInTheName
 
@@ -239,18 +240,18 @@ def getListOfFilesInDir(dirname) :
 
 def printListOfFilesInDir(dirname) :
     dirList = getListOfFilesInDir(dirname)
-    print 'List of files in the dir.', dirname
+    print('List of files in the dir.', dirname)
     for name in dirList :
-        print name,
-    print '\n'
+        print(name, end=' ')
+    print('\n')
 
 #----------------------------------
 
 def getListOfFiles(dirname, extension='h5') :
-    print """Returns the list of files in the specified directory with requested extension"""
+    print("""Returns the list of files in the specified directory with requested extension""")
     
     if not os.path.exists(dirname) :
-        print  'WARNING: THE SPECIFIED DIRECTORY "',dirname,'" DOES NOT EXIST.'
+        print('WARNING: THE SPECIFIED DIRECTORY "',dirname,'" DOES NOT EXIST.')
         return None
 
     dot_extension = '.' + extension
@@ -267,13 +268,13 @@ def getListOfFiles(dirname, extension='h5') :
 #----------------------------------
 
 def saveNumpyArrayInFile(arr, fname='nparray.txt', format='%f') : # format='%f'
-    print """Save numpy array in file """, fname
+    print("""Save numpy array in file """, fname)
     np.savetxt(fname, arr, fmt=format)
 
 #----------------------------------
 
 def getNumpyArrayFromFile(fname='nparray.txt', datatype=np.float32) : # np.int16, np.float16, np.float32
-    print """Load numpy array from file """, fname
+    print("""Load numpy array from file """, fname)
     return np.loadtxt(fname, dtype=datatype)
 
 #----------------------------------
@@ -282,14 +283,14 @@ def getCSPadArrayFromFile(fname, dtype=np.float32, shape = (32, 185, 388)) : # r
     try :
         root, ext = os.path.splitext(fname)
         arr = np.load(fname) if ext == '.npy' else np.loadtxt(fname, dtype)
-        print 'Load array from file:', fname
+        print('Load array from file:', fname)
         #print 'Input  arr.shape=', arr.shape
         #print 'Output arr.shape=', shape
         arr.shape = shape
         return arr
 
     except IOError:
-        print 'IOError: CAN NOT OPEN FILE:', fname
+        print('IOError: CAN NOT OPEN FILE:', fname)
         sys.exit ( "THIS PROBLEM NEEDS TO BE FIXED BEFORE YOU CAN CONTINUE..." )
         #return None
 
@@ -297,7 +298,7 @@ def getCSPadArrayFromFile(fname, dtype=np.float32, shape = (32, 185, 388)) : # r
 # Test
 
 def main() :    
-    for fname in getListOfFiles('/reg/d/psdm/cxi/cxii0211/hdf5', 'h5') : print fname
+    for fname in getListOfFiles('/reg/d/psdm/cxi/cxii0211/hdf5', 'h5') : print(fname)
 
 #----------------------------------
 

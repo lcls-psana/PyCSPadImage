@@ -19,6 +19,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 #------------------------------
 #  Module's version from CVS --
@@ -70,7 +71,7 @@ if __name__ == "__main__" :
     else :
         fname = sys.argv[1]
 
-    print 'Plot cspad image using ndarray from file:\n%s' % fname
+    print('Plot cspad image using ndarray from file:\n%s' % fname)
 
     nda = gm.getCSPadArrayFromFile(fname, dtype=np.float32, shape=(32, 185, 388)) 
 

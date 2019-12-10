@@ -17,6 +17,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 #---------------------
 import sys
@@ -97,7 +98,7 @@ class CSPAD2x2CalibPars (object) :
             else :
                 msg = 'WARNING: TYPE ' + type + ' IS UNKNOWN FOR CSPAD2x2' + \
                       '\n KNOWN TYPES:' + str(self.list_of_clib_types_total)
-                print msg
+                print(msg)
 
 #---------------------
 
@@ -164,7 +165,7 @@ class CSPAD2x2CalibPars (object) :
 
             cpars_for_type = self.loadCalibParsFromFileOrDefault (fname, type)
 
-            print 'cpars_for_type.shape = ', cpars_for_type.shape
+            print('cpars_for_type.shape = ', cpars_for_type.shape)
         
             # Special case of array shapes:
             if type == 'pedestals' \
@@ -192,9 +193,9 @@ class CSPAD2x2CalibPars (object) :
             return self.cpars[type]
 
         except IOError :
-            print 80*'!'
-            print 'WARNING: CALIBRATION FILE\n', fname, '\nIS CORRUPTED, WILL USE DEFAULT CONSTANTS.'
-            print 80*'!'
+            print(80*'!')
+            print('WARNING: CALIBRATION FILE\n', fname, '\nIS CORRUPTED, WILL USE DEFAULT CONSTANTS.')
+            print(80*'!')
             self.cpars_status[type] = 'DEFAULT'
             return self.getCalibParsDefault (type)
 
@@ -203,49 +204,49 @@ class CSPAD2x2CalibPars (object) :
     def printCalibFiles (self) :
         """Print the list of calibration files for this object.
         """
-        print '\nprintCalibFiles(): List of clib files:'
+        print('\nprintCalibFiles(): List of clib files:')
         msg = ''
         for type in self.list_of_clib_types :
             fname = findCalibFile (self.path_to_calib_types, type, self.run)
             msg += 'Calib type: %s has file: %s\n' % (type.ljust(15), fname)
-        print msg
+        print(msg)
 
 #---------------------
 
     def printListOfCalibTypes (self) :
         """Print the list of calibration types for this object.
         """
-        print '\nprintListOfCalibTypes(): List of clib types:'
-        for type in self.list_of_clib_types : print '   ' + type
+        print('\nprintListOfCalibTypes(): List of clib types:')
+        for type in self.list_of_clib_types : print('   ' + type)
 
 #---------------------
 
     def printCalibPars (self, type=None) :
         """Print all calibration parameters.
         """
-        print '\nprintCalibPars(): Calibration parameters:'
+        print('\nprintCalibPars(): Calibration parameters:')
         if type==None :
             for t in self.list_of_clib_types :
-                print '\nCalibration constants type "' + t + '" with shape' + str(self.cpars[t].shape)
-                print self.cpars[t]
+                print('\nCalibration constants type "' + t + '" with shape' + str(self.cpars[t].shape))
+                print(self.cpars[t])
 
         else :
             if type in self.list_of_clib_types :
-                print '\nprintCalibParsDefault(): Calibration constants type "' + type + '"' # + '" with shape', self.cpars[type].shape
-                print self.cpars[type]
+                print('\nprintCalibParsDefault(): Calibration constants type "' + type + '"') # + '" with shape', self.cpars[type].shape
+                print(self.cpars[type])
             else :
                 msg =  'WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "' + type + \
                        '" IS NOT FOUND IN THE AVAILABLE LIST:\n' + str(self.list_of_clib_types)
-                print msg
+                print(msg)
              
 #---------------------
 
     def printCalibParsStatus (self) :
         """Print status of calibration parameters for all specified files.
         """
-        print '\nprintCalibParsStatus(): Status of CSPAD2x2 calibration parameters:'
+        print('\nprintCalibParsStatus(): Status of CSPAD2x2 calibration parameters:')
         for type, status in self.cpars_status.iteritems() :
-            print 'Type: %s    Status: %s    Shape: %s' % (type.ljust(12), status.ljust(10), str(self.cpars[type].shape))
+            print('Type: %s    Status: %s    Shape: %s' % (type.ljust(12), status.ljust(10), str(self.cpars[type].shape)))
 
 #---------------------
 
@@ -257,7 +258,7 @@ class CSPAD2x2CalibPars (object) :
         if not (type in self.list_of_clib_types) :
             msg = 'WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "' + type + \
                    '" IS NOT FOUND IN THE AVAILABLE LIST:\n' + str(self.list_of_clib_types)
-            print msg
+            print(msg)
             return None
 
         fname = findCalibFile (self.path_to_calib_types, type, self.run)
@@ -286,8 +287,8 @@ def main_test() :
 
     calib.printCalibPars()
     calib.printCalibPars ('center')
-    print 'Test of getCalibPars("center", run):\n', calib.getCalibPars('center', run)
-    print 'Test of getCalibPars("tilt", run):\n',   calib.getCalibPars('tilt', run)
+    print('Test of getCalibPars("center", run):\n', calib.getCalibPars('center', run))
+    print('Test of getCalibPars("tilt", run):\n',   calib.getCalibPars('tilt', run))
     calib.printCalibParsStatus()
     calib.printListOfCalibTypes()
     calib.printCalibFiles()
@@ -299,18 +300,18 @@ def test_pedestals() :
     calib = CSPAD2x2CalibPars(path, list_of_clib_types=['center', 'tilt', 'pedestals'])
     run   = 180
     arr_pedestals = calib.getCalibPars('pedestals', run)
-    print '\narr_pedestals =\n', arr_pedestals
-    print '\narr_pedestals.shape =', arr_pedestals.shape
+    print('\narr_pedestals =\n', arr_pedestals)
+    print('\narr_pedestals.shape =', arr_pedestals.shape)
 
 
 if __name__ == "__main__" :
 
     if len(sys.argv)==1   :
         main_test()
-        print 'For other test(s) use command: python', sys.argv[0], '<test-number=1,2,...>'
+        print('For other test(s) use command: python', sys.argv[0], '<test-number=1,2,...>')
     elif sys.argv[1]=='1' : main_test()
     elif sys.argv[1]=='2' : test_pedestals()
-    else : print 'Non-expected arguments: sys.argv=', sys.argv
+    else : print('Non-expected arguments: sys.argv=', sys.argv)
 
     sys.exit ( 'End of job' )
 

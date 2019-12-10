@@ -18,6 +18,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 #------------------------------
 #  Module's version from CVS --
@@ -269,7 +270,7 @@ class CSPadImageProducer (object) :
         arr.shape = (arr.size/388,388)
         nrows,ncols = arr.shape # (32*185,388) = (5920,388) # <== expected input array shape for all sections
         if ncols != 388 or nrows<185 :
-            print 'getCSPadArrayWithGap(...): WARNING! UNEXPECTED INPUT ARRAY SHAPE =', arr.shape
+            print('getCSPadArrayWithGap(...): WARNING! UNEXPECTED INPUT ARRAY SHAPE =', arr.shape)
             return arr
         arr_gap = np.zeros( (nrows,gap), dtype=np.int16 )
         arr_halfs = np.hsplit(arr,2)
@@ -337,19 +338,19 @@ class CSPadImageProducer (object) :
 #---------------------
 
     def printInputPars(self) :
-        print '\nCSPadImageProducer(): printInputPars()'
-        print 'self.rotation =', self.rotation
-        print 'self.mirror   =', self.mirror
-        print 'self.tiltIsOn =', self.tiltIsOn
+        print('\nCSPadImageProducer(): printInputPars()')
+        print('self.rotation =', self.rotation)
+        print('self.mirror   =', self.mirror)
+        print('self.tiltIsOn =', self.tiltIsOn)
 
 #---------------------
 
     def printGeometryPars(self) :
-        print '\nCSPadImageProducer(): printGeometryPars()'
-        print 'self.detDimX, self.detDimY =', self.detDimX, self.detDimY
-        print 'segmX =\n',      self.segmX
-        print 'segmY =\n',      self.segmY
-        print 'segmRotInd =\n', self.segmRotInd
+        print('\nCSPadImageProducer(): printGeometryPars()')
+        print('self.detDimX, self.detDimY =', self.detDimX, self.detDimY)
+        print('segmX =\n',      self.segmX)
+        print('segmY =\n',      self.segmY)
+        print('segmRotInd =\n', self.segmRotInd)
 
 #---------------------
 
@@ -373,7 +374,7 @@ class CSPadImageProducer (object) :
 
 def main_calib() :
 
-    print 'Start test in main_calib()'
+    print('Start test in main_calib()')
 
     #calp.calibpars.setCalibPars( run      = 9,
     #                             calibdir = '/reg/d/psdm/CXI/cxi35711/calib',
@@ -403,14 +404,14 @@ def main_calib() :
 
     event  = 0
 
-    print 'Load calibration parameters from', path_calib
+    print('Load calibration parameters from', path_calib)
     calp.calibpars.setCalibParsForPath ( run=runnum, path=path_calib )
 
-    print 'Get raw CSPad event %d from file %s \ndataset %s' % (event, fname, dsname)
+    print('Get raw CSPad event %d from file %s \ndataset %s' % (event, fname, dsname))
     ds1ev = hm.getOneCSPadEventForTest( fname, dsname, event )
-    print 'ds1ev.shape = ',ds1ev.shape
+    print('ds1ev.shape = ',ds1ev.shape)
 
-    print 'Make the CSPad image from raw array'
+    print('Make the CSPad image from raw array')
     #cspadimg = CSPadImageProducer(rotation=3, tiltIsOn=False, mirror=False)
     cspadimg = CSPadImageProducer(rotation=0, tiltIsOn=False, mirror=False)
     cspadimg.printInputPars()
@@ -424,13 +425,13 @@ def main_calib() :
     AmpRange = (1700,2000)
     #AmpRange = (0, 100)
 
-    print 'Plot CSPad image'
+    print('Plot CSPad image')
     gg.plotImage(arr,range=AmpRange,figsize=(11.6,10))
     gg.move(200,100)
     #gg.plotImageAndSpectrum(arr,range=(1,2001))
     gg.plotSpectrum(arr,range=AmpRange)
     gg.move(50,50)
-    print 'To EXIT the test click on "x" in the top-right corner of each plot window.'
+    print('To EXIT the test click on "x" in the top-right corner of each plot window.')
     gg.show()
 
 #----------------------------------------------

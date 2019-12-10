@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 #------------------------------
 
@@ -36,7 +37,7 @@ def get_cspad_raw_data_array_image(arr) :
 
     if arr.shape != (4*8*185,388) :
         msg = 'Non-expected array shape for cspad:', arr.shape
-        print msg
+        print(msg)
         #logger.info(msg, 'CSPADImage')
         return None
     

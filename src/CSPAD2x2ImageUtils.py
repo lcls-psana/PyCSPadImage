@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 #------------------------------
 
@@ -57,7 +58,7 @@ def get_cspad2x2_non_corrected_image_for_raw_data_array(arr) :
         #return gg.getImageFromIndexArrays(iX,iY,arr)
 
     msg = 'Un-expected cspad2x2 array shape %s or size %s' % (str(arr.shape), arr.size)
-    print msg
+    print(msg)
     return None
     
 #------------------------------

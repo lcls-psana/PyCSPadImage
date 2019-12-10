@@ -17,6 +17,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 #--------------------------------
 #  Module's version from CVS --
@@ -71,13 +72,13 @@ def test_CSPAD2x2PixCoords() :
     #======= Print for test purpose 
     calib.printCalibParsStatus()
     #print 'pedestals:\n', calib.getCalibPars('pedestals')
-    print 'center:\n',    calib.getCalibPars('center')
-    print 'tilt:\n',      calib.getCalibPars('tilt')
-    print 'peds_arr.shape:', peds_arr.shape  # = (185, 388, 2)  
-    print 'Get data array from file: ' + fname
-    print 'data_arr.shape:', data_arr.shape
-    print 'ord_arr.shape:', ord_arr.shape
-    print 'img2d.shape:', img2d.shape
+    print('center:\n',    calib.getCalibPars('center'))
+    print('tilt:\n',      calib.getCalibPars('tilt'))
+    print('peds_arr.shape:', peds_arr.shape)  # = (185, 388, 2)  
+    print('Get data array from file: ' + fname)
+    print('data_arr.shape:', data_arr.shape)
+    print('ord_arr.shape:', ord_arr.shape)
+    print('img2d.shape:', img2d.shape)
 
     #======= Plot image and spectrum
     my_range = (-10,40) # None
@@ -105,10 +106,10 @@ def test_cspad2x2_image_with_data() :
     fname = '/reg/neh/home1/dubrovin/LCLS/HDF5Analysis-v01/PyCSPadImage/src/mec73313-r%04d.h5' % run
     dsname= '/Configure:0000/Run:0000/CalibCycle:0000/CsPad2x2::ElementV1/MecTargetChamber.0:Cspad2x2.5/data'
     data  = hm.getDataSetForOneEvent(fname, dsname, event=0) - peds
-    print 'data.shape =', data.shape
+    print('data.shape =', data.shape)
 
     img2d = coord.get_cspad2x2_image(data)
-    print 'img2d.shape =', img2d.shape
+    print('img2d.shape =', img2d.shape)
  
     gg.plotImageLarge(img2d, amp_range=(-10, 40), figsize=(12,11))
     gg.show()
@@ -121,7 +122,7 @@ def test_cspad2x2_image() :
 #------------------------------
  
 if __name__ == "__main__" :
-    if len(sys.argv)==1   : print 'Use command: python', sys.argv[0], '<test-number=0-5, 11-16>'
+    if len(sys.argv)==1   : print('Use command: python', sys.argv[0], '<test-number=0-5, 11-16>')
     elif sys.argv[1]=='0' : pixcoor.test_0()
     elif sys.argv[1]=='1' : pixcoor.test_1()
     elif sys.argv[1]=='2' : pixcoor.test_2()
@@ -136,7 +137,7 @@ if __name__ == "__main__" :
     elif sys.argv[1]=='15': pixcoor2x1.test_2x1_img()
     elif sys.argv[1]=='16': pixcoor2x1.test_2x1_img_easy()()
     
-    else : print 'Non-expected arguments: sys.argv=', sys.argv
+    else : print('Non-expected arguments: sys.argv=', sys.argv)
 
     sys.exit ( 'End of test.' )
 

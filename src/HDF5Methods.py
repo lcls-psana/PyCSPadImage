@@ -18,6 +18,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 #------------------------------
 #  Module's version from CVS --
@@ -58,18 +59,18 @@ class HDF5File(object) :
 
         #print '=== Open HDF5 file: ' + fname
         if not os.path.exists(fname) :
-            print  'ERROR: THE SPECIFIED FILE "', fname, '" DOES NOT EXIST.'
+            print('ERROR: THE SPECIFIED FILE "', fname, '" DOES NOT EXIST.')
             return None
             #sys.exit ( 'Exit on ERROR' )
 
         try :
             self.h5file = h5py.File(fname,'r') # open read-only
             self.fname = fname
-            print  'Open file', fname
+            print('Open file', fname)
             return self.h5file
 
         except IOError:
-            print 'IOError: CAN NOT OPEN FILE:', fname
+            print('IOError: CAN NOT OPEN FILE:', fname)
             return None
             #sys.exit ( 'Exit on ERROR' )
 
@@ -124,22 +125,22 @@ class HDF5File(object) :
 def print_hdf5_item_structure(g, offset='    ') :
     """Prints the input file/group/dataset (g) name and begin iterations on its content"""
     if   isinstance(g,h5py.File) :
-        print g.file, '(File)', g.name
+        print(g.file, '(File)', g.name)
 
     elif isinstance(g,h5py.Dataset) :
-        print '(Dataset)', g.name, '    len =', g.shape #, g.dtype
+        print('(Dataset)', g.name, '    len =', g.shape) #, g.dtype
 
     elif isinstance(g,h5py.Group) :
-        print '(Group)', g.name
+        print('(Group)', g.name)
 
     else :
-        print 'WORNING: UNKNOWN ITEM IN HDF5 FILE', g.name
+        print('WORNING: UNKNOWN ITEM IN HDF5 FILE', g.name)
         sys.exit ( "EXECUTION IS TERMINATED" )
 
     if isinstance(g, h5py.File) or isinstance(g, h5py.Group) :
         for key,val in dict(g).iteritems() :
             subg = val
-            print offset, key, #,"   ", subg.name #, val, subg.len(), type(subg),
+            print(offset, key, end=' ') #,"   ", subg.name #, val, subg.len(), type(subg),
             print_hdf5_item_structure(subg, offset + '    ')
 
 #---------------------
@@ -157,8 +158,8 @@ def get_cspad_name_and_data_type_from_dataset_name( dsname ) :
         #print 'CSPad name and data type =', cs.confcspad.cspad_name, cs.confcspad.cspad_data_type
         #return name2
     else :
-        print 'ERROR in get_cspad_name_and_data_type_from_dataset_name( dsname ) for\ndsname =', dsname,\
-              '\nReturn empty the CSPad name and data_type !!!'
+        print('ERROR in get_cspad_name_and_data_type_from_dataset_name( dsname ) for\ndsname =', dsname,\
+              '\nReturn empty the CSPad name and data_type !!!')
     return cspad_name, cspad_data_type
 
 #---------------------
@@ -169,8 +170,8 @@ def get_root_calib_dir_from_hdf5_path( path ) :
     """
     ind1 = path.find('/hdf5')
     if ind1==-1 :
-        print 'ERROR in get_root_calib_dir_from_hdf5_path(): The input path:', path, \
-        'does not contain the expected "/hdf" subdir !!! Return empty root path.'
+        print('ERROR in get_root_calib_dir_from_hdf5_path(): The input path:', path, \
+        'does not contain the expected "/hdf" subdir !!! Return empty root path.')
         return ''
         
     return path[0:ind1] + '/calib/'
@@ -199,8 +200,8 @@ def get_run_number_from_hdf5_file_name( fname ) :
     ind1 = fname.find('-r')
     ind2 = fname.find('.h5')
     if ind1==-1 or ind2==-1 or ind2<=ind1 :
-        print 'ERROR in get_run_number_from_hdf5_file_name(): The input file name:', fname, \
-        'is not an expected *-r<run_number>.h5 file name (i.e. cxi80410-r0742.h5) !!! Return the run_num=0'
+        print('ERROR in get_run_number_from_hdf5_file_name(): The input file name:', fname, \
+        'is not an expected *-r<run_number>.h5 file name (i.e. cxi80410-r0742.h5) !!! Return the run_num=0')
         return 0
     #print 'File name:', fname, 'Run number:', cs.confcspad.run_num
     return int(fname[ind1+2:ind2])
@@ -250,7 +251,7 @@ def getAverageCSPadEvent( fname   = '/reg/d/psdm/CXI/cxi35711/hdf5/cxi35711-r000
                           event1  = 1,
                           nevents = 10) :
 
-    print 'Average over', nevents, 'events, starting from', event1
+    print('Average over', nevents, 'events, starting from', event1)
 
     hdf5file = hdf5mets.open_hdf5_file(fname)
     ccp.cspadconfig.setCSPadConfigurationFromOpenFile( hdf5mets, dsname, event1 )
@@ -260,7 +261,7 @@ def getAverageCSPadEvent( fname   = '/reg/d/psdm/CXI/cxi35711/hdf5/cxi35711-r000
     for evt in range(event1, event1+nevents) :
         evdata += dataset[evt]
         if evt%10 == 0 :
-            print 'add event', evt
+            print('add event', evt)
             #print evdata[1,:]
 
     evdata /= nevents
@@ -289,7 +290,7 @@ def main_test1() :
     print_hdf5_item_structure(grp)
 
     arr = h5file.get_dataset_from_hdf5_file(dsname)
-    print 'arr[event]=\n', arr[event]
+    print('arr[event]=\n', arr[event])
 
     h5file.close_hdf5_file()
 
@@ -298,19 +299,19 @@ def main_test1() :
 def main_test2() :
     
     fname = 'cxi80410-r019742.h5'
-    print '\nTest get_run_number_from_hdf5_file_name(', fname, '), \nrun=',\
-          get_run_number_from_hdf5_file_name(fname)
+    print('\nTest get_run_number_from_hdf5_file_name(', fname, '), \nrun=',\
+          get_run_number_from_hdf5_file_name(fname))
 
     dsname = '/Configure:0000/Run:0000/CalibCycle:0000/CsPad::ElementV2/CxiDs1.0:Cspad.0/data'
-    print '\nTest get_cspad_name_and_data_type_from_dataset_name(', dsname,') \nCSPad (name, data_type) =',\
-          get_cspad_name_and_data_type_from_dataset_name(dsname)
+    print('\nTest get_cspad_name_and_data_type_from_dataset_name(', dsname,') \nCSPad (name, data_type) =',\
+          get_cspad_name_and_data_type_from_dataset_name(dsname))
 
     path_and_fname = '/reg/d/psdm/CXI/cxi35711/hdf5/cxi35711-r0009.h5'
-    print '\nTest get_root_calib_dir_from_hdf5_path(', path_and_fname,') \nroot_calib_dir =',\
-          get_root_calib_dir_from_hdf5_path( path_and_fname )
+    print('\nTest get_root_calib_dir_from_hdf5_path(', path_and_fname,') \nroot_calib_dir =',\
+          get_root_calib_dir_from_hdf5_path( path_and_fname ))
 
-    print '\nTest get_cspad_calib_dir(', path_and_fname,') \ncspad_calib_dir =',\
-          get_cspad_calib_dir( path_and_fname, cspad_name='CxiDs1.0:Cspad.0' )
+    print('\nTest get_cspad_calib_dir(', path_and_fname,') \ncspad_calib_dir =',\
+          get_cspad_calib_dir( path_and_fname, cspad_name='CxiDs1.0:Cspad.0' ))
 
 #---------------------
 

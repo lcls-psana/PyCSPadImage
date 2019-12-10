@@ -17,6 +17,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 #--------------------------------
 #  Module's version from CVS --
@@ -143,7 +144,7 @@ class CSPADPixCoords (PixCoords2x1) :
             + '\ntilt:\n'     + str( sp.tilt )
             #+ '\nxc:'       + str( sp.xc ) \
             #+ '\nyc:'       + str( sp.yc ) \
-        print msg
+        print(msg)
 
 #------------------------------
 
@@ -167,7 +168,7 @@ class CSPADPixCoords (PixCoords2x1) :
                 sp.x_pix_um[quad][sect][:] =  Xrot + xc_um[quad][sect]
                 sp.y_pix_um[quad][sect][:] =  Yrot + yc_um[quad][sect]
 
-        print 'make_cspad_pix_coordinate_arrays: xmin, ymin:', sp.x_pix_um.min()/sp.pixs, sp.y_pix_um.min()/sp.pixs
+        print('make_cspad_pix_coordinate_arrays: xmin, ymin:', sp.x_pix_um.min()/sp.pixs, sp.y_pix_um.min()/sp.pixs)
         if do_crop :
             sp.x_pix_um -= sp.x_pix_um.min()
             sp.y_pix_um -= sp.y_pix_um.min()
@@ -198,10 +199,10 @@ class CSPADPixCoords (PixCoords2x1) :
 #------------------------------
 
     def print_cspad_coordinate_arrays(sp) :
-        print 'sp.x_pix_um:\n',      sp.x_pix_um
-        print 'sp.x_pix_um.shape =', sp.x_pix_um.shape
-        print 'sp.y_pix_um\n',       sp.y_pix_um
-        print 'sp.y_pix_um.shape =', sp.y_pix_um.shape
+        print('sp.x_pix_um:\n',      sp.x_pix_um)
+        print('sp.x_pix_um.shape =', sp.x_pix_um.shape)
+        print('sp.y_pix_um\n',       sp.y_pix_um)
+        print('sp.y_pix_um.shape =', sp.y_pix_um.shape)
 
 #------------------------------
 
@@ -246,15 +247,15 @@ def test_of_coord_arrs(coord, config=None) :
 
     iX,iY = coord.get_cspad_pix_coordinate_arrays_pix (config)
 
-    print 'iX.shape =', iX.shape
-    print 'iY.shape =', iY.shape
+    print('iX.shape =', iX.shape)
+    print('iY.shape =', iY.shape)
 
     weights = get_test_cspad_pix_arr(config)
 
     t0_sec = time()
     #img2d = gg.getImageAs2DHist(iX,iY,W=None)
     img2d = gg.getImageFromIndexArrays(iX,iY,W=weights)
-    print 'Consumed time to create image (sec) =', time()-t0_sec
+    print('Consumed time to create image (sec) =', time()-t0_sec)
 
     #gg.plotImageLarge(img2d, amp_range=(-1, 32), figsize=(12,11)) #amp_range=(0, 2000)
     gg.plotImageLarge(img2d, amp_range=None, figsize=(12,11)) #amp_range=(0, 2000)
@@ -288,7 +289,7 @@ def test_cspadpixcoords_instantiation_1() :
     t0_sec = time()
     coord = CSPADPixCoords(xc_um=xc, yc_um=yc, tilt_deg=tilt, use_wide_pix_center=False)
     coord.print_cspad_geometry_pars()
-    print 'Consumed time for CSPADPixCoords instatiation (sec) =', time()-t0_sec
+    print('Consumed time for CSPADPixCoords instatiation (sec) =', time()-t0_sec)
     return coord
 
 #------------------------------
@@ -302,7 +303,7 @@ def test_cspadpixcoords_instantiation_2() :
     path = '/reg/neh/home1/dubrovin/LCLS/CSPadAlignment-v01/calib-xpp-2013-01-29'
     run   = 123
     calib = CalibPars(path, run)
-    print 'center_global:\n', calib.getCalibPars ('center_global') 
+    print('center_global:\n', calib.getCalibPars ('center_global')) 
     coord = CSPADPixCoords(calib)
     coord.print_cspad_geometry_pars()
     return coord
@@ -340,7 +341,7 @@ def test_cspadpixcoords_3() :
     """
     coord = test_cspadpixcoords_instantiation_1() 
     img2d = coord.get_cspad_image(None)
-    print 'img2d.shape =', img2d.shape
+    print('img2d.shape =', img2d.shape)
     
     gg.plotImageLarge(img2d, amp_range=(-1, 2), figsize=(12,11))
     gg.show()
@@ -368,13 +369,13 @@ def test_cspadpixcoords_4() :
 #------------------------------
 
 if __name__ == "__main__" :
-    if len(sys.argv)==1   : print 'Use command: python', sys.argv[0], '<test-number=0-4>'
+    if len(sys.argv)==1   : print('Use command: python', sys.argv[0], '<test-number=0-4>')
     elif sys.argv[1]=='0' : test_cspadpixcoords_0() # Instatiation default
     elif sys.argv[1]=='1' : test_cspadpixcoords_1() # Instatiation using external geometry parameters
     elif sys.argv[1]=='2' : test_cspadpixcoords_2() # Instatiation using calib = CalibPars(path, run)
     elif sys.argv[1]=='3' : test_cspadpixcoords_3() # Test of coord.get_cspad_image()
     elif sys.argv[1]=='4' : test_cspadpixcoords_4() # Test of default constructor for coords and non-default for config
-    else : print 'Non-expected arguments: sys.argv=', sys.argv
+    else : print('Non-expected arguments: sys.argv=', sys.argv)
 
     sys.exit ( 'End of test.' )
 

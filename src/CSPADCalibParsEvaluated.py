@@ -18,6 +18,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 #------------------------------
 #  Module's version from CVS --
@@ -261,14 +262,14 @@ class CSPADCalibParsEvaluated (object) :
 #---------------------
 
     def printListOfEvaluatedTypes (self) :
-        print 'printListOfEvaluatedTypes(): list_of_eval_types:', self.list_of_eval_types
+        print('printListOfEvaluatedTypes(): list_of_eval_types:', self.list_of_eval_types)
 
 #---------------------
 
     def printCalibParsEvaluatedAll (self) :
         for type in self.list_of_eval_types :
-            print '\nEvaluated calibration parameter type "' + type + '" with shape', self.evalpars[type].shape
-            print self.evalpars[type]
+            print('\nEvaluated calibration parameter type "' + type + '" with shape', self.evalpars[type].shape)
+            print(self.evalpars[type])
 
 #---------------------
 
@@ -277,15 +278,15 @@ class CSPADCalibParsEvaluated (object) :
         """        
         if partype==None :
             for type in self.list_of_eval_types :
-                print '\nprintCalibParsEvaluated(): Evaluated calibration parameter type "' + type + '" with shape', self.evalpars[type].shape
-                print self.evalpars[type]
+                print('\nprintCalibParsEvaluated(): Evaluated calibration parameter type "' + type + '" with shape', self.evalpars[type].shape)
+                print(self.evalpars[type])
         else :
             if partype in self.list_of_eval_types :
-                print '\nprintCalibParsEvaluated(): Evaluated calibration parameter type "' + partype + '" with shape', self.evalpars[partype].shape
-                print self.evalpars[partype]
+                print('\nprintCalibParsEvaluated(): Evaluated calibration parameter type "' + partype + '" with shape', self.evalpars[partype].shape)
+                print(self.evalpars[partype])
             else :
-                print  'WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "', partype, \
-                       '" IS NOT FOUND IN THE AVAILABLE LIST:\n', self.list_of_eval_types
+                print('WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "', partype, \
+                       '" IS NOT FOUND IN THE AVAILABLE LIST:\n', self.list_of_eval_types)
             
 #---------------------
 
@@ -299,8 +300,8 @@ class CSPADCalibParsEvaluated (object) :
         if type in self.list_of_eval_types :
             return self.evalpars[type]
         else :
-            print  'WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "', type, \
-                   '" IS NOT FOUND IN THE AVAILABLE LIST:\n', self.list_of_eval_types
+            print('WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "', type, \
+                   '" IS NOT FOUND IN THE AVAILABLE LIST:\n', self.list_of_eval_types)
             return None
 
 #----------------------------------------------

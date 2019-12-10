@@ -19,6 +19,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 #------------------------------
 #  Module's version from CVS --
@@ -45,13 +46,13 @@ def test_01() :
     path_to_clib_types = '/reg/d/psdm/xpp/xppi0815/calib/CsPad::CalibV1/XppGon.0:Cspad.0'
     runnum = 120
     type = 'pedestals'
-    print '  path_to_clib_types: %s\n  type: %s\n  runnum: %d' % (path_to_clib_types, type, runnum)
+    print('  path_to_clib_types: %s\n  type: %s\n  runnum: %d' % (path_to_clib_types, type, runnum))
 
     #calibstore = calp.CalibPars(path=path_calib, run=runnum)
     #pedestals = calibstore.getCalibPars('pedestals', runnum)
 
     fname = calp.findCalibFile(path_to_clib_types, type, runnum) 
-    print '  calibration file name: %s' % fname
+    print('  calibration file name: %s' % fname)
 
 #------------------------------
 
@@ -65,12 +66,12 @@ def test_02() :
     type  = 'pedestals'
     rnum  = 120
 
-    print '  cdir: %s\n  type: %s\n  runnum: %d' % (cdir, type, rnum)
+    print('  cdir: %s\n  type: %s\n  runnum: %d' % (cdir, type, rnum))
 
     cff = CalibFileFinder(cdir, group, pbits=0377)
     fname = cff.findCalibFile(src, type, rnum)
 
-    print '  calibration file name: %s' % fname
+    print('  calibration file name: %s' % fname)
 
  
 #------------------------------

@@ -19,6 +19,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 #------------------------------
 #  Module's version from CVS --
@@ -38,7 +39,7 @@ def getCSPadArrayWithGap(arr, gap=3) :
     #print 'getCSPadArrayWithGap(...): Input array shape =', arr.shape
     nrows,ncols = arr.shape # (32*185,388) # <== expected input array shape
     if ncols != 388 or nrows<185 :
-        print 'getCSPadArrayWithGap(...): WARNING! UNEXPECTED INPUT ARRAY SHAPE =', arr.shape
+        print('getCSPadArrayWithGap(...): WARNING! UNEXPECTED INPUT ARRAY SHAPE =', arr.shape)
         return arr
     arr_gap = np.zeros( (nrows,gap), dtype=np.int16 )
     arr_halfs = np.hsplit(arr,2)
@@ -89,7 +90,7 @@ def get_raw_array_for_cspad_test() :
 
 def plot_img(img_arr) :
     """Plot image for test purpose"""
-    print 'img_arr.shape=', img_arr.shape
+    print('img_arr.shape=', img_arr.shape)
     gg.plotImageLarge(img_arr) #, img_range=None, amp_range=None, ... 
     gg.savefig('cspad-arr-img.png')
     gg.move(500,10)
@@ -130,7 +131,7 @@ def test5() :
 def main() :
 
     if len(sys.argv)==1   :
-        print 'Use command > python %s <test-number [1-5]>' % sys.argv[0]
+        print('Use command > python %s <test-number [1-5]>' % sys.argv[0])
         sys.exit ('Add <test-number> in command line...')
 
     elif sys.argv[1]=='1' : test1()
@@ -139,7 +140,7 @@ def main() :
     elif sys.argv[1]=='4' : test4()
     elif sys.argv[1]=='5' : test5()
     else :
-        print 'Non-expected arguments: sys.argv=', sys.argv
+        print('Non-expected arguments: sys.argv=', sys.argv)
         sys.exit ('Check input parameters')
 
 #------------------------------

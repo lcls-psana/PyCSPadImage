@@ -18,6 +18,7 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
+from __future__ import print_function
 
 #------------------------------
 #  Module's version from CVS --
@@ -74,7 +75,7 @@ def test_plot_cspad_image(fname, dsname, path_calib, run, event=0, nevents=1, am
     config.printCSPadConfigPars()
  
     img2d = coord.get_cspad_image(ds1ev, config)
-    print 'img2d.shape =', img2d.shape
+    print('img2d.shape =', img2d.shape)
     
     gg.plotImageLarge(img2d, amp_range=amps, figsize=(12,11))
     #gg.plotImageLarge(img2d, amp_range=None, figsize=(12,11))
@@ -126,7 +127,7 @@ def test_cspad_image(test_num=1) :
         amps       = (-10, 100)
 
     elif test_num == 6 : # Test of T.J. alignment
-        print 'HERE!'
+        print('HERE!')
         run        = 13
         fname      = '/reg/d/psdm/CXI/cxia4113/hdf5/cxia4113-r0013.h5'
         path_calib = '/reg/neh/home1/dubrovin/LCLS/CSPadAlignment-v01/calib-test-cxia4113-r0013-Ds1/CsPad::CalibV1/CxiDs1.0:Cspad.0/'
@@ -136,7 +137,7 @@ def test_cspad_image(test_num=1) :
         amps       = (0, 500)
 
     else: 
-        print 'Non-defined test number:', test_num
+        print('Non-defined test number:', test_num)
         sys.exit ( 'Exit, use proper input parameter.' )        
 
     test_plot_cspad_image(fname, dsname, path_calib, run, event, nevents, amps, do_peds)
@@ -145,7 +146,7 @@ def test_cspad_image(test_num=1) :
 
 if __name__ == "__main__" :
     if len(sys.argv)==1   :
-        print 'Use command: python', sys.argv[0], '<test-number=1-5, 10-13, 20-22>'
+        print('Use command: python', sys.argv[0], '<test-number=1-5, 10-13, 20-22>')
         sys.exit ( 'Exit, use proper input parameter.' )        
 
     test_number = int(sys.argv[1])
@@ -161,7 +162,7 @@ if __name__ == "__main__" :
     elif sys.argv[1]=='21': pixcoor2x1.test_2x1_img()
     elif sys.argv[1]=='22': pixcoor2x1.test_2x1_img_easy()
 
-    else : print 'Non-expected arguments: sys.argv=', sys.argv
+    else : print('Non-expected arguments: sys.argv=', sys.argv)
 
     sys.exit ( 'End of test.' )
 
