@@ -103,7 +103,7 @@ class HDF5File(object) :
 
         #print 'get_cspad_config_dsname(): loop over group content:'
         grp = self.get_dataset_from_hdf5_file(grpname)
-        for key,val in dict(grp).iteritems() :
+        for key,val in dict(grp).items() :
             #print '  ', key, val
             if key.find(pattern)==0 :
                 #print '    ', val.name
@@ -138,7 +138,7 @@ def print_hdf5_item_structure(g, offset='    ') :
         sys.exit ( "EXECUTION IS TERMINATED" )
 
     if isinstance(g, h5py.File) or isinstance(g, h5py.Group) :
-        for key,val in dict(g).iteritems() :
+        for key,val in dict(g).items() :
             subg = val
             print(offset, key, end=' ') #,"   ", subg.name #, val, subg.len(), type(subg),
             print_hdf5_item_structure(subg, offset + '    ')

@@ -280,7 +280,7 @@ class CalibPars (object) :
         """Print status of calibration parameters for all specified files.
         """
         print('\nprintCalibParsStatus(): Status of CSPAD2x2 calibration parameters:')
-        for type, status in self.cpars_status.iteritems() :
+        for type, status in self.cpars_status.items() :
             print('Type: %s    Status: %s    Shape: %s' % (type.ljust(16), status.ljust(10), str(self.cpars[type].shape)))
  
 #---------------------

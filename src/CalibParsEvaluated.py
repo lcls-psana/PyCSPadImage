@@ -19,6 +19,7 @@ part of it, please give an appropriate acknowledgment.
 @author Mikhail S. Dubrovin
 """
 from __future__ import print_function
+from __future__ import division
 
 #------------------------------
 #  Module's version from CVS --
@@ -260,8 +261,8 @@ class CalibParsEvaluated (object) :
 
                 #print 'rot_ind, rot_ind%2 =', rot_ind, rot_ind%2 # IT WORKS
 
-                if self.rot_ind%2 == 0 : xsize, ysize = wid2x1/2, len2x1/2
-                else                   : xsize, ysize = len2x1/2, wid2x1/2
+                if self.rot_ind%2 == 0 : xsize, ysize = wid2x1//2, len2x1//2
+                else                   : xsize, ysize = len2x1//2, wid2x1//2
 
                 if xc-xsize < xmin : xmin = xc-xsize
                 if xc+xsize > xmax : xmax = xc+xsize

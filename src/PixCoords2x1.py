@@ -38,6 +38,7 @@ The (r,c)=(0,0) is in the top left corner of the matrix, has coordinates (xmin,y
 
 """
 from __future__ import print_function
+from __future__ import division
 
 #--------------------------------
 #  Module's version from CVS --
@@ -64,7 +65,7 @@ def rotation(X, Y, C, S) :
 
 #------------------------------
 
-class PixCoords2x1() :
+class PixCoords2x1(object) :
     """Self-sufficient class for generation of CSPad 2x1 sensor pixel coordinate array"""
 
     rows  = 185    # Number of rows in 2x1 at rotation 0
@@ -72,9 +73,9 @@ class PixCoords2x1() :
     pixs  = 109.92 # Pixel size in um (micrometer)
     pixw  = 274.80 # Wide pixel size in um (micrometer)
 
-    colsh = cols/2
-    pixsh = pixs/2
-    pixwh = pixw/2
+    colsh = cols//2
+    pixsh = pixs//2
+    pixwh = pixw//2
 
 #------------------------------
 

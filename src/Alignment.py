@@ -154,7 +154,7 @@ def alignment_for_cspad_ndarray(fname, amps=(0,500), center=(877.0,875.5), rad_r
     #-------- find corrections to center position
     #if True :
     if False :
-        dc_list = xrange(-4,5,1)
+        dc_list = range(-4,5,1)
         
         dxmax = 0
         dymax = 0

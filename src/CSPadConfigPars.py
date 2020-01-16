@@ -104,7 +104,7 @@ class HDF5File(object) :
 
         #print 'get_cspad_config_dsname(): loop over group content:'
         grp = self.get_dataset_from_hdf5_file(grpname)
-        for key,val in dict(grp).iteritems() :
+        for key,val in dict(grp).items() :
             #print '  ', key, val
             if key.find(pattern)==0 :
                 #print '    ', val.name

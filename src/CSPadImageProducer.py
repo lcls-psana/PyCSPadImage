@@ -19,6 +19,7 @@ part of it, please give an appropriate acknowledgment.
 @author Mikhail S. Dubrovin
 """
 from __future__ import print_function
+from __future__ import division
 
 #------------------------------
 #  Module's version from CVS --
@@ -267,7 +268,7 @@ class CSPadImageProducer (object) :
 
     def getCSPadArrayWithGap(self, arr, gap=3) :
         #print 'getCSPadArrayWithGap(...): Input array shape =', arr.shape
-        arr.shape = (arr.size/388,388)
+        arr.shape = (arr.size//388,388)
         nrows,ncols = arr.shape # (32*185,388) = (5920,388) # <== expected input array shape for all sections
         if ncols != 388 or nrows<185 :
             print('getCSPadArrayWithGap(...): WARNING! UNEXPECTED INPUT ARRAY SHAPE =', arr.shape)
@@ -296,7 +297,7 @@ class CSPadImageProducer (object) :
 
         dim3 = arr_all.shape[arr.ndim-1] # should be 388 or 388+gap
         dim2 = 185
-        dim1 = arr_all.size/dim3/dim2
+        dim1 = arr_all.size//dim3//dim2
         arr_all.shape = (dim1,dim2,dim3) # Reshape for quad and segment indexes
 
         #print 'dims          =', dim1, dim2, dim3
@@ -327,8 +328,8 @@ class CSPadImageProducer (object) :
                 nrows, ncols = arr_segm_rot.shape
                 #print 'quad, segm, nrows, ncols = ', quad, segm, nrows, ncols
 
-                xOff = self.segmX[quad][segm] - nrows/2
-                yOff = self.segmY[quad][segm] - ncols/2
+                xOff = self.segmX[quad][segm] - nrows//2
+                yOff = self.segmY[quad][segm] - ncols//2
 
                 arr_cspad_img[xOff:nrows+xOff, yOff:ncols+yOff] += arr_segm_rot[0:nrows, 0:ncols]
 
