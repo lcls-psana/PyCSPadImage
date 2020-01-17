@@ -19,6 +19,7 @@ part of it, please give an appropriate acknowledgment.
 """
 from __future__ import print_function
 from __future__ import division
+from __future__ import absolute_import
 
 #--------------------------------
 #  Module's version from CVS --
@@ -33,7 +34,7 @@ import numpy as np
 from time import time
 
 #import matplotlib.pyplot as plt
-from PixCoords2x1 import *
+from .PixCoords2x1 import *
 import pyimgalgos.GlobalGraphics as gg # For test purpose in main only
 #------------------------------
 
