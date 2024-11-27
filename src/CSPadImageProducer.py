@@ -1,11 +1,3 @@
-#--------------------------------------------------------------------------
-# File and Version Information:
-#  $Id$
-#
-# Description:
-#  Module CSPadImageProducer...
-#
-#------------------------------------------------------------------------
 
 """This module provides access to the calibration parameters
 
@@ -18,18 +10,8 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
-from __future__ import print_function
-from __future__ import division
 
-#------------------------------
-#  Module's version from CVS --
-#------------------------------
 __version__ = "$Revision$"
-# $Source$
-
-#----------
-#  Imports
-#----------
 
 import sys
 import os
@@ -44,14 +26,10 @@ import PyCSPadImage.CSPadConfigPars    as ccp
 import pyimgalgos.GlobalGraphics as gg # For test purpose in main only
 import PyCSPadImage.HDF5Methods  as hm # For test purpose in main only
 
-#---------------------
-#  Class definition --
-#---------------------
 
 class CSPadImageProducer (object) :
     """This class produces the device dependent CSPad image"""
 
-#---------------------
 
     def getImageArrayForPair( self, arr1ev, pairNum=None ):
         """Returns the image array for pair of ASICs"""
@@ -66,7 +44,6 @@ class CSPadImageProducer (object) :
         arr2d  = np.hstack((asics[0],arrgap,asics[1]))
         return arr2d
 
-#---------------------
 
     def getImageArrayForQuad( self, arr1ev, quadNum=None ):
         """Returns the image array for one quad"""
@@ -159,7 +136,6 @@ class CSPadImageProducer (object) :
         #print 'arr2dquad=\n', arr2dquad
         return arr2dquad
 
-#---------------------
 
     def getImageArrayForCSPadElement( self, arr1ev ):
         """Returns the image array for the CSPad detector for dataset CSPadElement"""
@@ -202,7 +178,6 @@ class CSPadImageProducer (object) :
 
         return self.arr2dCSpad
 
-#---------------------
 
     def getImageArrayForDet( self, arr1ev ):
         """Returns the image array for entire CSpad detector"""
@@ -224,7 +199,6 @@ class CSPadImageProducer (object) :
 
         return self.arr2dCSpad
 
-#---------------------
 
     def getImageArrayForCSpad2x2ElementPair( self, arr1ev, pairNum=None ):
         """Returns the image array for pair of ASICs"""
@@ -240,7 +214,6 @@ class CSPadImageProducer (object) :
         arr2d  = np.hstack((asics[0],arrgap,asics[1]))
         return arr2d
 
-#---------------------
 
     def getImageArrayForCSpad2x2Element( self, arr1ev ):
         """Returns the image array for the CSpad2x2Element or CSpad2x2"""
@@ -250,21 +223,13 @@ class CSPadImageProducer (object) :
         wid2x1      = arr2x1Pair0.shape[0]
         len2x1      = arr2x1Pair0.shape[1]
 
-        arrgapV = np.zeros( (20,len2x1), dtype=np.float ) # dtype=np.int16
+        arrgapV = np.zeros((20,len2x1), dtype=np.float32) # dtype=np.int16
         arr2d   = np.vstack((arr2x1Pair0, arrgapV, arr2x1Pair1))
 
         #print 'arr2d.shape=', arr2d.shape
         #print 'arr2d=',       arr2d
         return arr2d
 
-#---------------------
-#---------------------
-#---------------------
-# New approach to the CSPad geometry
-# All 2x1 centers of entire CSPad are defined in the same coordinate frame.
-#---------------------
-#---------------------
-#---------------------
 
     def getCSPadArrayWithGap(self, arr, gap=3) :
         #print 'getCSPadArrayWithGap(...): Input array shape =', arr.shape
@@ -279,7 +244,6 @@ class CSPadImageProducer (object) :
         arr_with_gap.shape = (nrows,ncols+gap)
         return arr_with_gap
 
-#---------------------
 
     def getCSPadImage(self, arr) :
 
@@ -336,7 +300,6 @@ class CSPadImageProducer (object) :
         if self.mirror : return  np.fliplr(arr_cspad_img)
         else           : return  arr_cspad_img
 
-#---------------------
 
     def printInputPars(self) :
         print('\nCSPadImageProducer(): printInputPars()')
@@ -344,7 +307,6 @@ class CSPadImageProducer (object) :
         print('self.mirror   =', self.mirror)
         print('self.tiltIsOn =', self.tiltIsOn)
 
-#---------------------
 
     def printGeometryPars(self) :
         print('\nCSPadImageProducer(): printGeometryPars()')
@@ -353,7 +315,6 @@ class CSPadImageProducer (object) :
         print('segmY =\n',      self.segmY)
         print('segmRotInd =\n', self.segmRotInd)
 
-#---------------------
 
     def __init__ (self, calibpars, rotation=0, tiltIsOn=False, mirror=False) :
         #print 'CSPadImageProducer(): Initialization'
@@ -371,7 +332,6 @@ class CSPadImageProducer (object) :
         #self.printInputPars()
         #self.printGeometryPars()
 
-#----------------------------------------------
 
 def main_calib() :
 
@@ -435,11 +395,10 @@ def main_calib() :
     print('To EXIT the test click on "x" in the top-right corner of each plot window.')
     gg.show()
 
-#----------------------------------------------
 
 if __name__ == "__main__" :
 
     main_calib()
     sys.exit ( 'End of test.' )
 
-#----------------------------------------------
+# EOF

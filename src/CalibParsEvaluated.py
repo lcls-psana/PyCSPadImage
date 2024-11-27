@@ -1,16 +1,8 @@
-#--------------------------------------------------------------------------
-# File and Version Information:
-#  $Id$
-#
-# Description:
-#  Module CalibParsEvaluated...
-#
-#------------------------------------------------------------------------
 
 """This module provides access to the calibration parameters
 
-This software was developed for the SIT project.  If you use all or 
-part of it, please give an appropriate acknowledgment.
+This software was developed for the SIT project.
+If you use all or part of it, please give an appropriate acknowledgment.
 
 @see RelatedModule
 
@@ -18,18 +10,9 @@ part of it, please give an appropriate acknowledgment.
 
 @author Mikhail S. Dubrovin
 """
-from __future__ import print_function
-from __future__ import division
 
-#------------------------------
-#  Module's version from CVS --
-#------------------------------
 __version__ = "$Revision$"
-# $Source$
 
-#----------
-#  Imports 
-#----------
 import sys
 import os
 import math
@@ -37,24 +20,17 @@ import numpy as np
 import PyCSPadImage.CalibParsDefault as cpd
 import PyCSPadImage.CSPadConfigPars  as ccp
 
-#import pyimgalgos.GlobalGraphics as gg # For test purpose in main only
-#import PyCSPadImage.HDF5Methods  as hm # For test purpose in main only
-
-#---------------------
-#  Class definition --
-#---------------------
 
 class CalibParsEvaluated (object) :
     """This class provides access to the evaluated calibration parameters
     """
-#---------------------
 
     def __init__ (self, calibpars=None) :
 
         self.calibpars = calibpars
 
         self.run = None # 10
-        
+
         self.list_of_eval_types =[  'center_global'
                                    ,'rotation_index'
                                  ]
@@ -64,7 +40,6 @@ class CalibParsEvaluated (object) :
         self.setCalibParsEvaluated()
         #self.evaluateCSPadGeometry()
 
-#---------------------
 
     def setCalibParsEvaluatedFromDefault (self) :
         #print 'Set default calibration parameters for evaluated'
@@ -75,26 +50,23 @@ class CalibParsEvaluated (object) :
         for type in self.list_of_eval_types :
             self.evalpars[type] = self.getCalibParsDefault (type)
 
-#---------------------
 
     def getCalibParsDefault (self, type) :
         return cpd.calibparsdefault.getCalibParsDefault (type)
 
-#---------------------
 
     def setCalibParsEvaluated (self) :
         print('Set the calibration parameters evaluated')
 
-        # For now the only type of evaluated parameters is the 'center_global'        
+        # For now the only type of evaluated parameters is the 'center_global'
 
         self.mode = 'EVALUATED'
 
         self.evalpars['center_global'] = self.evaluateCSPadCenterGlobal() # np.array()
-        #self.printCalibParsEvaluated ('center_global') 
+        #self.printCalibParsEvaluated ('center_global')
 
         self.evaluateCSPadGeometry()
 
-#---------------------
 
     def evaluateCSPadCenterGlobal(self) :
         """Evaluate the CSPad 'center_global' coordinates for all 2x1s and override the default version
@@ -116,23 +88,23 @@ class CalibParsEvaluated (object) :
         dy = np.array([margY-gapY-shiftY,  margY+gapY-shiftY,  margY+gapY+shiftY,  margY-gapY+shiftY])
         dz = np.array([0, 0, 0, 0])
 
-        xmin_quad = offset[0] + offset_corr[0] + dx 
+        xmin_quad = offset[0] + offset_corr[0] + dx
         ymin_quad = offset[1] + offset_corr[1] + dy
         zmin_quad = offset[2] + offset_corr[2] + dz
 
         #print 'offset =\n',         offset
         #print 'offset_corr =\n',    offset_corr
         #print 'marg_gap_shift =\n', marg_gap_shift
-        #print 'quad_rotation =\n',  quad_rotation        
-        #print 'quad_tilt =\n',      quad_tilt    
+        #print 'quad_rotation =\n',  quad_rotation
+        #print 'quad_tilt =\n',      quad_tilt
 
-        #print 'dx =', dx 
-        #print 'dy =', dy 
-        #print 'dz =', dz 
+        #print 'dx =', dx
+        #print 'dy =', dy
+        #print 'dz =', dz
 
-        #print 'xmin_quad =',xmin_quad  
-        #print 'ymin_quad =',ymin_quad  
-        #print 'zmin_quad =',zmin_quad  
+        #print 'xmin_quad =',xmin_quad
+        #print 'ymin_quad =',ymin_quad
+        #print 'zmin_quad =',zmin_quad
 
         self.fill2x1CentersInQuads()
 
@@ -163,7 +135,6 @@ class CalibParsEvaluated (object) :
         #return self.evalpars['center_global']
         return self.center_global_evaluated
 
-#---------------------
 
     def fill2x1CentersInQuads(self) :
 
@@ -190,11 +161,10 @@ class CalibParsEvaluated (object) :
         self.coor_x_max = ccp.cspadconfig.quadDimX
         self.coor_y_max = ccp.cspadconfig.quadDimY
 
-        #print 'self.xcenter =\n', self.xcenter  
-        #print 'self.ycenter =\n', self.ycenter  
-        #print 'self.zcenter =\n', self.zcenter  
+        #print 'self.xcenter =\n', self.xcenter
+        #print 'self.ycenter =\n', self.ycenter
+        #print 'self.zcenter =\n', self.zcenter
 
-#---------------------
 
     def get2x1CentersInQuadForRotN90(self, quad, rotN90) :
         if   rotN90 ==   0 : return self.get2x1CentersInQuadForRot000(quad)
@@ -206,35 +176,30 @@ class CalibParsEvaluated (object) :
         #          'Invalid rotation angle=', rotN90, 'for quad=', quad
         #    sys.exit('Exit application due to error.')
 
-#---------------------
 
     def get2x1CentersInQuadForRot000(self, quad) :
         return  np.array([ self.xcenter[quad] - self.coor_x_min, \
                            self.ycenter[quad] - self.coor_y_min, \
                            self.zcenter[quad] ])
 
-#---------------------
 
     def get2x1CentersInQuadForRot090(self, quad) :
         return  np.array([-self.ycenter[quad] + self.coor_y_max, \
                            self.xcenter[quad] - self.coor_x_min, \
-                           self.zcenter[quad] ]) 
+                           self.zcenter[quad] ])
 
-#---------------------
 
     def get2x1CentersInQuadForRot180(self, quad) :
         return  np.array([-self.xcenter[quad] + self.coor_x_max, \
                           -self.ycenter[quad] + self.coor_y_max, \
-                           self.zcenter[quad] ]) 
+                           self.zcenter[quad] ])
 
-#---------------------
 
     def get2x1CentersInQuadForRot270(self, quad) :
         return  np.array([ self.ycenter[quad] - self.coor_y_min, \
                           -self.xcenter[quad] + self.coor_x_max, \
-                           self.zcenter[quad] ])  
-    
-#---------------------
+                           self.zcenter[quad] ])
+
 
     def evaluateCSPadGeometry (self) :
         """Evaluate the image size and subtract xmin, ymin from all center coordinates
@@ -277,14 +242,13 @@ class CalibParsEvaluated (object) :
         self.centerX = np.zeros((4, 8), dtype=np.float32)
         self.centerY = np.zeros((4, 8), dtype=np.float32)
 
-        #print 'Image size =', self.detDimX, self.detDimY 
+        #print 'Image size =', self.detDimX, self.detDimY
 
         for quad in range(4) :
             for segm in range(8): # loop over 0,1,2,...,7
                 self.centerX[quad,segm] = self.xc_arr[quad,segm] - xmin + margin
-                self.centerY[quad,segm] = self.yc_arr[quad,segm] - ymin + margin               
+                self.centerY[quad,segm] = self.yc_arr[quad,segm] - ymin + margin
 
-#---------------------
 
     def getCSPadGeometry (self, rotation=0) :
 
@@ -293,7 +257,7 @@ class CalibParsEvaluated (object) :
 
         self.centerX_final   = np.zeros((4, 8), dtype=np.float32)
         self.centerY_final   = np.zeros((4, 8), dtype=np.float32)
-        self.rot_index_final = np.zeros((4, 8), dtype=np.int)
+        self.rot_index_final = np.zeros((4, 8), dtype=np.int32)
 
         if rot % 2 == 0 :
             self.detDimX_final = self.detDimX
@@ -301,7 +265,7 @@ class CalibParsEvaluated (object) :
         else :
             self.detDimX_final = self.detDimY
             self.detDimY_final = self.detDimX
-            
+
         for quad in range(4) :
             for segm in range(8): # loop over 0,1,2,...,7
 
@@ -327,9 +291,8 @@ class CalibParsEvaluated (object) :
                     self.centerX_final[quad,segm] = self.detDimY - self.centerY[quad,segm]
                     self.centerY_final[quad,segm] =                self.centerX[quad,segm]
 
-        return self.detDimX_final, self.detDimY_final, self.centerX_final, self.centerY_final, self.rot_index_final 
+        return self.detDimX_final, self.detDimY_final, self.centerX_final, self.centerY_final, self.rot_index_final
 
-#---------------------
 
     def evaluateCSPadPixCoordinates (self, rotation=0, mirror=False) :
 
@@ -341,7 +304,7 @@ class CalibParsEvaluated (object) :
 
         lenCoords_um, widCoords_um = self.evaluate2x1PixCoordinates_um ()
         segmX_um = segmX*pixSize
-        segmY_um = segmY*pixSize 
+        segmY_um = segmY*pixSize
 
         detDimX_um = detDimX*pixSize
         detDimY_um = detDimY*pixSize
@@ -363,11 +326,11 @@ class CalibParsEvaluated (object) :
 
         self.pix_global_x = np.zeros((nquads,nsects,185,388), dtype=np.float32)
         self.pix_global_y = np.zeros((nquads,nsects,185,388), dtype=np.float32)
-        
+
         for quad in range(nquads) :
             for sect in range(nsects) :
                 angle     = -(dPhi[quad][sect] + 90*segmRotInd[quad][sect] + 90)
-                angle_rad = math.radians(angle)                
+                angle_rad = math.radians(angle)
                 S,C = math.sin(angle_rad), math.cos(angle_rad)
                 Xrot, Yrot = self.rotation(X, Y, C, S)
 
@@ -382,18 +345,15 @@ class CalibParsEvaluated (object) :
                     self.pix_global_y[quad][sect][:] =  Yrot + yc
                     #self.pix_global_y[quad][sect][:] = -Yrot - yc + detDimY_um # mirror wrt Y
 
-#---------------------
 
     def getCSPadPixCoordinates_um (self) :
         return self.pix_global_x, self.pix_global_y
 
-#---------------------
 
     def getCSPadPixCoordinates_pix (self) :
         pixSize = ccp.cspadconfig.pixSize
         return self.pix_global_x / pixSize, self.pix_global_y / pixSize
 
-#---------------------
 
     def evaluateCSPadPixCoordinatesShapedAsData(self, fname, dsname, rotation=0, mirror=False) :
 
@@ -411,7 +371,7 @@ class CalibParsEvaluated (object) :
         nsects_in_data = max(indPairsInQuads.flatten()) + 1
         self.pix_global_shaped_as_data_x = np.zeros((nsects_in_data,185,388), dtype=np.float32)
         self.pix_global_shaped_as_data_y = np.zeros((nsects_in_data,185,388), dtype=np.float32)
-        
+
         for iq in range(len(quadNumsInEvent)) :
             quad = int(quadNumsInEvent[iq]) # uint8 -> int
             for segm in range(8): # loop over ind = 0,1,2,...,7
@@ -421,21 +381,18 @@ class CalibParsEvaluated (object) :
                 self.pix_global_shaped_as_data_x[ind_segm_in_arr][:] = self.pix_global_x[quad][segm][:]
                 self.pix_global_shaped_as_data_y[ind_segm_in_arr][:] = self.pix_global_y[quad][segm][:]
 
-        print('self.pix_global_shaped_as_data_x.shape =', self.pix_global_shaped_as_data_x.shape)       
+        print('self.pix_global_shaped_as_data_x.shape =', self.pix_global_shaped_as_data_x.shape)
         print('evaluateCSPadPixCoordinatesShapedAsData: done')
 
-#---------------------
 
     def getCSPadPixCoordinatesShapedAsData_um (self) :
         return self.pix_global_shaped_as_data_x, self.pix_global_shaped_as_data_y
 
-#---------------------
 
     def getCSPadPixCoordinatesShapedAsData_pix (self) :
         pixSize = ccp.cspadconfig.pixSize
         return self.pix_global_shaped_as_data_x / pixSize, self.pix_global_shaped_as_data_y / pixSize
 
-#---------------------
 
     def printCSPadPixCoordinates (self) :
 
@@ -445,26 +402,24 @@ class CalibParsEvaluated (object) :
         print('self.pix_global_x.shape=', self.pix_global_x.shape)
         print('self.pix_global_y.shape=', self.pix_global_y.shape)
 
-#---------------------
 
     def rotation(self, X, Y, C, S) :
         """For numpy arryys X and Y returns the numpy arrays of Xrot and Yrot
         """
-        Xrot = X*C + Y*S 
-        Yrot = Y*C - X*S 
+        Xrot = X*C + Y*S
+        Yrot = Y*C - X*S
         return Xrot, Yrot
 
-#---------------------
 
     def getTestImageForEntireArray(self,ds1ev) :
         """WERY SLOW METHOD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        """        
+        """
         xpix, ypix = self.getCSPadPixCoordinates_pix ()
-        
+
         #dimX,dimY = 1750, 1750
         dimX,dimY = self.detDimX, self.detDimY
         img_arr = np.zeros((dimX+1,dimY+1), dtype=np.float32)
-        
+
         for quad in range(4) :
             for sect in range(8) :
                 segm = quad*8+sect
@@ -483,21 +438,20 @@ class CalibParsEvaluated (object) :
 
         return img_arr
 
-#---------------------
 
     def getTestImageShapedAsData(self,ds1ev) :
         """WERY SLOW METHOD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        """        
+        """
         xpix, ypix = self.getCSPadPixCoordinatesShapedAsData_pix ()
 
         print('Data       array shape = ', ds1ev.shape)
         print('Coordinate array shape = ',  xpix.shape)
-        
+
         dimX,dimY = self.detDimX, self.detDimY
 
         img_arr = np.zeros((dimX+1,dimY+1), dtype=np.float32)
 
-        nsect_in_arr = xpix.shape[0] 
+        nsect_in_arr = xpix.shape[0]
         print('nsect_in_arr =', nsect_in_arr)
 
         for sect in range(nsect_in_arr) :
@@ -516,7 +470,6 @@ class CalibParsEvaluated (object) :
 
         return img_arr
 
-#---------------------
 
     def evaluate2x1PixCoordinates_um (self) :
 
@@ -544,12 +497,11 @@ class CalibParsEvaluated (object) :
         lenCoords[193] = -pixSizeWide/2
         lenCoords[194] =  pixSizeWide/2
 
-        #for i in range(wid2x1) : print 'widCoords[%3d] = %10.2f' % (i,widCoords[i]) 
-        #for i in range(len2x1) : print 'lenCoords[%3d] = %10.2f' % (i,lenCoords[i]) 
+        #for i in range(wid2x1) : print 'widCoords[%3d] = %10.2f' % (i,widCoords[i])
+        #for i in range(len2x1) : print 'lenCoords[%3d] = %10.2f' % (i,lenCoords[i])
 
         return lenCoords, widCoords # in um
 
-#---------------------
 
     def print2DNumpyArr( self, arr=np.zeros((4,8), dtype=np.float32), title='', format='%10.2f' ) :
         print(title, end=' ')
@@ -558,15 +510,13 @@ class CalibParsEvaluated (object) :
         for row in range(rows) :
             print('\nrow ', row, ':', end=' ')
             for col in range(cols) :
-                print(format % (arr[row][col]), end=' ')                   
+                print(format % (arr[row][col]), end=' ')
         print('\n')
 
-#---------------------
 
     def printListOfEvaluatedTypes (self) :
         print('printListOfEvaluatedTypes(): list_of_eval_types:', self.list_of_eval_types)
 
-#---------------------
 
     def printCalibParsEvaluatedAll (self) :
 
@@ -574,11 +524,10 @@ class CalibParsEvaluated (object) :
             print('\nEvaluated calibration parameter type "' + type + '" with shape', self.evalpars[type].shape)
             print(self.evalpars[type])
 
-#---------------------
 
     def printCalibParsEvaluated (self, partype=None) :
         """Print the calibration prarameters of specified partype or all for dafault.
-        """        
+        """
         if partype==None :
             for type in self.list_of_eval_types :
                 print('\nprintCalibParsEvaluated(): Evaluated calibration parameter type "' + type + '" with shape', self.evalpars[type].shape)
@@ -590,8 +539,7 @@ class CalibParsEvaluated (object) :
             else :
                 print('WARNING: THE REQUESTED TYPE OF CALIBRATION PARS "', partype, \
                        '" IS NOT FOUND IN THE AVAILABLE LIST:\n', self.list_of_eval_types)
-            
-#---------------------
+
 
     def getCalibParsEvaluated (self, type) :
 
@@ -602,13 +550,6 @@ class CalibParsEvaluated (object) :
                    '" IS NOT FOUND IN THE AVAILABLE LIST:\n', self.list_of_eval_types)
             return None
 
-#----------------------------------------------
-
-#cpeval = CalibParsEvaluated() # Sets the default calibration parameters.
-
-#----------------------------------------------
-# In case someone decides to run this module --
-#----------------------------------------------
 
 import PyCSPadImage.CalibPars as calp # for test purpose only
 
@@ -633,4 +574,4 @@ if __name__ == "__main__" :
     main_test()
     sys.exit ( 'End of job' )
 
-#----------------------------------------------
+# EOF
